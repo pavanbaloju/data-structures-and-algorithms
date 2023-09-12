@@ -13,7 +13,7 @@ int singleNumber(vector<int> &nums)
     }
     for (int i = 0; i < nums.size(); i++)
     {
-        if (hashMap.at(nums[i]) == 1)
+        if (hashMap[nums[i]] == 1)
         {
             return nums[i];
         }

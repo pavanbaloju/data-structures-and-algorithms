@@ -15,11 +15,11 @@ int binarySearchRecursive(vector<int> &nums, int target, int start, int end)
     }
     else if (target > nums[mid])
     {
-        return binarySearch(nums, target, mid + 1, end);
+        return binarySearchRecursive(nums, target, mid + 1, end);
     }
     else
     {
-        return binarySearch(nums, target, start, mid - 1);
+        return binarySearchRecursive(nums, target, start, mid - 1);
     }
 }
 

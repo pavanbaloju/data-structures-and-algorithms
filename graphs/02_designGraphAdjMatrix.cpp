@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <queue>
 #include <unordered_set>
 using namespace std;
@@ -75,6 +76,34 @@ public:
 
         return res;
     }
+
+    vector<int> dfs(int startingVertex)
+    {
+        vector<int> res;
+        stack<int> st;
+        unordered_set<int> visited(V);
+
+        st.push(startingVertex);
+        visited.insert(startingVertex);
+
+        while (!st.empty())
+        {
+            int v = st.top();
+            st.pop();
+            res.push_back(v);
+
+            for (int i = 0; i < V; i++)
+            {
+                if (E[v][i] == 1 && !visited.count(i))
+                {
+                    st.push(i);
+                    visited.insert(i);
+                }
+            }
+        }
+
+        return res;
+    }
 };
 
 int main()
@@ -92,6 +121,12 @@ int main()
     vector<int> bfs = g.bfs(2);
     cout << "bfs" << endl;
     for (int v : bfs)
+        cout << v << " ";
+    cout << endl;
+
+    vector<int> dfs = g.dfs(2);
+    cout << "dfs" << endl;
+    for (int v : dfs)
         cout << v << " ";
     cout << endl;
     return 0;

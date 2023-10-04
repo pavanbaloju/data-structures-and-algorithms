@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <stack>
 #include <unordered_set>
 using namespace std;
 
@@ -31,9 +32,9 @@ public:
         for (int i = 0; i < V; i++)
         {
             cout << i << " ----> ";
-            for (int n : E[i])
+            for (int j = 0; j < E[i].size(); j++)
             {
-                cout << n << " ";
+                cout << E[i][j] << " ";
             }
             cout << endl;
         }
@@ -66,6 +67,33 @@ public:
 
         return res;
     }
+    vector<int> dfs(int startingVertex)
+    {
+        vector<int> res;
+        stack<int> st;
+        unordered_set<int> visited(V);
+
+        st.push(startingVertex);
+        visited.insert(startingVertex);
+
+        while (!st.empty())
+        {
+            int v = st.top();
+            st.pop();
+            res.push_back(v);
+
+            for (int i = 0; i < E[v].size(); i++)
+            {
+                if (!visited.count(E[v][i]))
+                {
+                    st.push(E[v][i]);
+                    visited.insert(E[v][i]);
+                }
+            }
+        }
+
+        return res;
+    }
 };
 
 int main()
@@ -83,6 +111,12 @@ int main()
     vector<int> bfs = g.bfs(2);
     cout << "bfs" << endl;
     for (int v : bfs)
+        cout << v << " ";
+    cout << endl;
+
+    vector<int> dfs = g.dfs(2);
+    cout << "dfs" << endl;
+    for (int v : dfs)
         cout << v << " ";
     cout << endl;
     return 0;

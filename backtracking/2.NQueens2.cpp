@@ -14,15 +14,7 @@ void print(vector<string> board)
 bool isNotUnderAttack(vector<string> &board, int row, int col)
 {
     int n = board.size();
-
-    // row
-    for (int j = 0; j < col; j++)
-    {
-        if (board[row][j] == 'Q')
-        {
-            return false;
-        }
-    }
+    
     // col
     for (int i = 0; i < row; i++)
     {

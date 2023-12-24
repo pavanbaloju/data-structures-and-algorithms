@@ -25,13 +25,16 @@ string intToRoman(int num)
     for (int i = m.size() - 1; i >= 0; i--)
     {
         pair<string, int> p = m[i];
-        while (num >= p.second)
+        int count = floor(num / p.second);
+        if (count)
         {
-            res += p.first;
-            num -= p.second;
+            while (count--)
+            {
+                res += p.first;
+            }
+            num = num % p.second;
         }
     }
-
     return res;
 }
 

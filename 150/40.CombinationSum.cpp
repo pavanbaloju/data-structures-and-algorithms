@@ -12,7 +12,7 @@ void print(vector<vector<int>> &ans)
     }
 }
 
-void solve(int index, vector<int> nums, vector<int> &comb, vector<vector<int>> &ans, int target)
+void solve(int index, vector<int> &nums, vector<int> &comb, vector<vector<int>> &ans, int target)
 {
     if (target < 0 || index == nums.size())
         return;
@@ -23,12 +23,9 @@ void solve(int index, vector<int> nums, vector<int> &comb, vector<vector<int>> &
         return;
     }
 
-    if (target >= nums[index])
-    {
-        comb.push_back(nums[index]);
-        solve(index, nums, comb, ans, target - nums[index]);
-        comb.pop_back();
-    }
+    comb.push_back(nums[index]);
+    solve(index, nums, comb, ans, target - nums[index]);
+    comb.pop_back();
     solve(index + 1, nums, comb, ans, target);
 }
 

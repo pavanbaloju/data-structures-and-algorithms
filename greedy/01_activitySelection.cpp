@@ -18,7 +18,7 @@ int maxActivities(vector<vector<int>> activities)
 
     for (int i = 0; i < activities.size(); i++)
     {
-        if (activities[i][0] >= finish)
+        if (activities[i][0] > finish)
         {
             finish = activities[i][1];
             maxActivities++;

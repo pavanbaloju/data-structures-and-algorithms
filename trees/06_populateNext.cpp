@@ -43,26 +43,36 @@ Node *connect(Node *root)
     return root;
 }
 
+// works for perfect binary tree (node with both children except leaf nodes)
 Node *connect2(Node *root)
 {
     if (!root)
         return nullptr;
-    
+
     Node *curr = root, *nxt = root->left;
+
+    // while there is a node with children
     while (curr && nxt)
     {
+        // assign left child next with right child
         curr->left->next = curr->right;
+
+        // if a node exists next to current parent node in the same level
         if (curr->next)
         {
             curr->right->next = curr->next->left;
         }
+        // move to next node in the same level
         curr = curr->next;
+
+        // if next node in the same level is null i.e at the end
+        // move current to next level and nxt to starting of next next level
         if (!curr)
         {
             curr = nxt;
             nxt = curr->left;
         }
     }
-    
+
     return root;
 }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <map>
 using namespace std;
 
 struct TreeNode
@@ -13,27 +14,25 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-void solve(TreeNode *root, vector<int> &res, int height)
+void avg(TreeNode *root, int level, map<int, pair<double, double>> &vc)
 {
     if (root == NULL)
-    {
         return;
-    }
 
-    // check if result does not have values of current height
-    // values {1, 3, 5} -> size is 3, last height traversed is 2, if height == 3, add to result
-    if (height == res.size())
-    {
-        res.push_back(root->val);
-    }
-    solve(root->right, res, height + 1);
-    solve(root->left, res, height + 1);
+    vc[level].first += root->val; // value
+    vc[level].second++; // count
+
+    avg(root->left, level + 1, vc);
+    avg(root->right, level + 1, vc);
 }
-
-vector<int> rightSideViewDFS(TreeNode *root)
+vector<double> averageOfLevelsDFS(TreeNode *root)
 {
-    vector<int> res;
-    solve(root, res, 0);
+    map<int, pair<double, double>> vc;
+    vector<double> res;
+    avg(root, 0, vc);
+
+    for (auto i : vc)
+        res.push_back(i.second.first / i.second.second);
     return res;
 }
 
@@ -72,7 +71,7 @@ int main()
     root->left = new TreeNode(2);
     root->right = new TreeNode(3);
 
-    vector<double> res = averageOfLevels(root);
+    vector<double> res = averageOfLevelsDFS(root);
     for (double x : res)
         cout << x << " ";
     cout << endl;

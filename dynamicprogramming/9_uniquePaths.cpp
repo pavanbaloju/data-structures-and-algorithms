@@ -87,10 +87,33 @@ int uniquePathsOpt(int m, int n)
     return prevRow[n - 1];
 }
 
+// nCr formula
+//  n + m - 2
+//        C
+//          m - 1
+//  or
+//  n + m - 2
+//        C
+//          n - 1
+// n - r + 1   n - r + 2           n - r + r
+// --------- x -------- x ...... x ---------
+// 1               2                   r
+int uniquePathsNCR(int m, int n)
+{
+    int N = n + m - 2;
+    int r = m - 1;
+    double res = 1;
+
+    for (int i = 1; i <= r; i++)
+        res = res * (N - r + i) / i;
+    return (int)res;
+}
+
 int main()
 {
     cout << uniquePaths(2, 6) << endl;
     cout << uniquePathsMemo(3, 7) << endl;
     cout << uniquePathsTable(3, 7) << endl;
     cout << uniquePathsOpt(3, 7) << endl;
+    cout << uniquePathsNCR(3, 7) << endl;
 }

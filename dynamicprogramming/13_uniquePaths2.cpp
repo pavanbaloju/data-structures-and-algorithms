@@ -3,9 +3,9 @@
 using namespace std;
 
 // simple recursion
-int uniquePaths(int m, int n, vector<vector<int>> maze)
+int uniquePathsWithObstacles(int m, int n, vector<vector<int>> obstacleGrid)
 {
-    if (m >= 0 && n >= 0 && maze[m][n] == -1)
+    if (m > 0 && n > 0 && obstacleGrid[m][n] == 1)
         return 0;
 
     if (m == 0 || n == 0)
@@ -13,13 +13,13 @@ int uniquePaths(int m, int n, vector<vector<int>> maze)
     if (m < 0 || n < 0)
         return 0;
 
-    return uniquePaths(m - 1, n, maze) + uniquePaths(m, n - 1, maze);
+    return uniquePathsWithObstacles(m - 1, n, obstacleGrid) + uniquePathsWithObstacles(m, n - 1, obstacleGrid);
 }
 
 // recursion + memo
-int solveMemo(int m, int n, vector<vector<int>> &dp, vector<vector<int>> maze)
+int solveMemo(int m, int n, vector<vector<int>> &dp, vector<vector<int>> obstacleGrid)
 {
-    if (m >= 0 && n >= 0 && maze[m][n] == -1)
+    if (m > 0 && n > 0 && obstacleGrid[m][n] == 1)
         return 0;
     if (m == 0 || n == 0)
         return 1;
@@ -28,22 +28,22 @@ int solveMemo(int m, int n, vector<vector<int>> &dp, vector<vector<int>> maze)
     if (dp[m][n] != -1)
         return dp[m][n];
 
-    return dp[m][n] = (solveMemo(m - 1, n, dp, maze) + solveMemo(m, n - 1, dp, maze));
+    return dp[m][n] = (solveMemo(m - 1, n, dp, obstacleGrid) + solveMemo(m, n - 1, dp, obstacleGrid));
 }
-int uniquePathsMemo(int m, int n, vector<vector<int>> maze)
+int uniquePathsWithObstaclesMemo(int m, int n, vector<vector<int>> obstacleGrid)
 {
     vector<vector<int>> dp = vector<vector<int>>(m, vector<int>(n, -1));
-    return solveMemo(m - 1, n - 1, dp, maze);
+    return solveMemo(m - 1, n - 1, dp, obstacleGrid);
 }
 
 // table
-int solveTable(int m, int n, vector<vector<int>> &dp, vector<vector<int>> maze)
+int solveTable(int m, int n, vector<vector<int>> &dp, vector<vector<int>> obstacleGrid)
 {
     for (int i = 0; i < m; i++)
     {
         for (int j = 0; j < n; j++)
         {
-            if (i >= 0 && j >= 0 && maze[i][j] == -1)
+            if (i > 0 && i > 0 && obstacleGrid[i][j] == 1)
             {
                 dp[i][j] = 0;
             }
@@ -59,14 +59,14 @@ int solveTable(int m, int n, vector<vector<int>> &dp, vector<vector<int>> maze)
     }
     return dp[m - 1][n - 1];
 }
-int uniquePathsTable(int m, int n, vector<vector<int>> maze)
+int uniquePathsWithObstaclesTable(int m, int n, vector<vector<int>> obstacleGrid)
 {
     vector<vector<int>> dp = vector<vector<int>>(m, vector<int>(n, -1));
-    return solveTable(m, n, dp, maze);
+    return solveTable(m, n, dp, obstacleGrid);
 }
 
 // opt
-int uniquePathsOpt(int m, int n, vector<vector<int>> maze)
+int uniquePathsWithObstaclesOpt(int m, int n, vector<vector<int>> obstacleGrid)
 {
     vector<int> prevRow(n, 0);
     for (int i = 0; i < m; i++)
@@ -74,7 +74,7 @@ int uniquePathsOpt(int m, int n, vector<vector<int>> maze)
         vector<int> currRow(n, 0);
         for (int j = 0; j < n; j++)
         {
-            if (i >= 0 && j >= 0 && maze[i][j] == -1)
+            if (i >= 0 && j >= 0 && obstacleGrid[i][j] == 1)
             {
                 currRow[j] = 0;
             }
@@ -102,16 +102,13 @@ int uniquePathsOpt(int m, int n, vector<vector<int>> maze)
 
 int main()
 {
-    vector<vector<int>> maze{
+    vector<vector<int>> obstacleGrid{
         {0, 0, 0},
-        {0, -1, 0},
+        {0, 1, 0},
         {0, 0, 0}};
-    // vector<vector<int>> maze{
-    //     {0, -1},
-    //     {0, 0}};
-    int n = maze.size(), m = maze[0].size();
-    cout << uniquePaths(n - 1, m - 1, maze) << endl;
-    cout << uniquePathsMemo(n, m, maze) << endl;
-    cout << uniquePathsTable(n, m, maze) << endl;
-    cout << uniquePathsOpt(n, m, maze) << endl;
+    int n = obstacleGrid.size(), m = obstacleGrid[0].size();
+    cout << uniquePathsWithObstacles(n - 1, m - 1, obstacleGrid) << endl;
+    cout << uniquePathsWithObstaclesMemo(n, m, obstacleGrid) << endl;
+    cout << uniquePathsWithObstaclesTable(n, m, obstacleGrid) << endl;
+    cout << uniquePathsWithObstaclesOpt(n, m, obstacleGrid) << endl;
 }

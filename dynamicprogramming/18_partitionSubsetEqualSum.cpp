@@ -7,6 +7,7 @@ bool solve(int ind, int target, vector<int> nums, vector<vector<int>> dp)
 {
     if (dp[ind][target] != -1)
         return dp[ind][target];
+    
     if (target == 0)
         return dp[ind][target] = true;
     if (ind == 0)
@@ -19,14 +20,26 @@ bool solve(int ind, int target, vector<int> nums, vector<vector<int>> dp)
     return dp[ind][target] = hasSum;
 }
 
-bool subsetSumToK(vector<int> nums, int target)
+bool canPartition(vector<int> nums)
 {
-    vector<vector<int>> dp(nums.size(), vector<int>(target + 1, -1));
-    return solve(nums.size() - 1, target, nums, dp);
+    int k = 0;
+    for (int num : nums)
+        k += num;
+    if (k % 2)
+        return false;
+    k /= 2;
+    vector<vector<int>> dp(nums.size(), vector<int>(k + 1, -1));
+    return solve(nums.size() - 1, k, nums, dp);
 }
 
-bool subsetSumToKTable(vector<int> &nums, int k)
+bool canPartitionTable(vector<int> &nums)
 {
+    int k = 0;
+    for (int num : nums)
+        k += num;
+    if (k % 2)
+        return false;
+    k /= 2;
     int n = nums.size();
     vector<vector<bool>> dp(n, vector<bool>(k + 1, false));
 
@@ -59,8 +72,14 @@ bool subsetSumToKTable(vector<int> &nums, int k)
     return dp[n - 1][k];
 }
 
-bool subsetSumToKOpt(vector<int> &nums, int k)
+bool canPartitionOpt(vector<int> &nums)
 {
+    int k = 0;
+    for (int num : nums)
+        k += num;
+    if (k % 2)
+        return false;
+    k /= 2;
     int n = nums.size();
     vector<bool> prev(k + 1, false);
     prev[0] = true;
@@ -78,7 +97,6 @@ bool subsetSumToKOpt(vector<int> &nums, int k)
         {
             // exclude
             bool hasSum = prev[target];
-
             // include
             if (nums[ind] <= target)
             {
@@ -97,9 +115,9 @@ int main()
     vector<int> nums = {1, 2, 3, 4};
     int target = 4;
 
-    cout << subsetSumToK(nums, target) << endl;
-    cout << subsetSumToKTable(nums, target) << endl;
-    cout << subsetSumToKOpt(nums, target) << endl;
+    cout << canPartition(nums) << endl;
+    cout << canPartitionTable(nums) << endl;
+    cout << canPartitionOpt(nums) << endl;
 
     return 0;
 }

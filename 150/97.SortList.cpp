@@ -19,39 +19,28 @@ struct ListNode
     }
 };
 
-ListNode *mergelist(ListNode *list1, ListNode *list2)
+ListNode *merge(ListNode *head1, ListNode *head2)
 {
-    ListNode *dummy = new ListNode(0);
-    ListNode *curr = dummy;
-
-    while (list1 != nullptr && list2 != nullptr)
+    if (!head1)
     {
-        if (list1->val <= list2->val)
-        {
-            curr->next = list1;
-            list1 = list1->next;
-        }
-        else
-        {
-            curr->next = list2;
-            list2 = list2->next;
-        }
-        curr = curr->next;
+        return head2;
     }
-
-    if (list1 != nullptr)
+    if (!head2)
     {
-        curr->next = list1;
-        list1 = list1->next;
+        return head1;
     }
-
-    if (list2 != nullptr)
+    ListNode *temp;
+    if (head1->val < head2->val)
     {
-        curr->next = list2;
-        list2 = list2->next;
+        temp = head1;
+        temp->next = merge(head1->next, head2);
     }
-
-    return dummy->next;
+    else
+    {
+        temp = head2;
+        temp->next = merge(head1, head2->next);
+    }
+    return temp;
 }
 
 ListNode *getMiddle(ListNode *head)
@@ -83,7 +72,7 @@ ListNode *sortList(ListNode *head)
     ListNode *list1 = sortList(left);
     ListNode *list2 = sortList(right);
 
-    return mergelist(list1, list2);
+    return merge(list1, list2);
 }
 
 int main()

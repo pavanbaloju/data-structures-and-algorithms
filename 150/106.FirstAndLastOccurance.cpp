@@ -64,6 +64,22 @@ vector<int> searchRange2(vector<int> &nums, int target)
     return {-1, -1};
 }
 
+vector<int> searchRange3(vector<int> &nums, int target)
+{
+    int first = lower_bound(nums.begin(), nums.end(), target) - nums.begin();
+    if (first == nums.size() || nums[first] != target)
+    {
+        return {-1, -1};
+    }
+    int last = first;
+    while (last < nums.size() && nums[last] == target)
+    {
+        last++;
+    }
+    last--;
+    return {first, last};
+}
+
 int main()
 {
     vector<int> nums = {5, 7, 7, 8, 8, 10};
@@ -72,6 +88,10 @@ int main()
         cout << x << " ";
     cout << endl;
     res = searchRange2(nums, 8);
+    for (int x : res)
+        cout << x << " ";
+    cout << endl;
+    res = searchRange3(nums, 8);
     for (int x : res)
         cout << x << " ";
 }

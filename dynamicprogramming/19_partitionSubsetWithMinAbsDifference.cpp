@@ -38,11 +38,13 @@ int minimumDifference(vector<int>& nums)
         subsetSumUtil(n - 1, i, nums, dp);
 
     int mini = 1e9;
-    for (int i = 0; i <= totSum; i++)
+    for (int sum = 0; sum <= totSum; sum++)
     {
-        if (dp[n - 1][i] == true)
+        if (dp[n - 1][sum] == true)
         {
-            int diff = abs(i - (totSum - i));
+            // sum : partition1 sum
+            // total - sum: partition2 sum
+            int diff = abs(sum - (totSum - sum));
             mini = min(mini, diff);
         }
     }

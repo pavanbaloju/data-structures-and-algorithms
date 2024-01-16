@@ -10,6 +10,7 @@ bool isValidSudoku2(vector<vector<char>> &board)
     unordered_set<string> visited;
 
     for (int i = 0; i < 9; ++i)
+    {
         for (int j = 0; j < 9; ++j)
         {
             if (board[i][j] == '.')
@@ -20,6 +21,7 @@ bool isValidSudoku2(vector<vector<char>> &board)
                 !visited.insert(c + "@box" + to_string(i / 3) + to_string(j / 3)).second)
                 return false;
         }
+    }
 
     return true;
 }
@@ -109,7 +111,7 @@ int main()
         {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
         {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
         {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
-    cout << isValidSudoku(board);
-    cout << isValidSudoku2(board);
-    cout << isValidSudoku3(board);
+    cout << isValidSudoku(board) << endl;
+    cout << isValidSudoku2(board) << endl;
+    cout << isValidSudoku3(board) << endl;
 }

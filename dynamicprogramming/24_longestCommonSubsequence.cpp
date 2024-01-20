@@ -92,7 +92,7 @@ string getLCS(string s, string t)
             si--;
             ti--;
         }
-        else if (s[si - 1] > t[ti - 1])
+        else if (dp[si] > dp[ti])
         {
             si--;
         }

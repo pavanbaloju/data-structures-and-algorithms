@@ -35,7 +35,7 @@ int longestCommonSubsequenceTableUtil(string s, string t, vector<vector<int>> &d
             {
                 dp[si][ti] = 0;
             }
-            else if (s[si] == t[ti])
+            else if (s[si - 1] == t[ti - 1])
             {
                 dp[si][ti] = 1 + dp[si - 1][ti - 1];
             }
@@ -92,7 +92,7 @@ string getLCS(string s, string t)
             si--;
             ti--;
         }
-        else if (dp[si] > dp[ti])
+        else if (dp[si - 1] > dp[ti - 1])
         {
             si--;
         }
@@ -107,7 +107,7 @@ string getLCS(string s, string t)
 int main()
 {
     cout << longestCommonSubsequence("abcde", "ace") << endl;
-    cout << longestCommonSubsequenceTable("abcde", "ace") << endl;
+    cout << longestCommonSubsequenceTable("brute", "groot") << endl;
     cout << longestCommonSubsequenceOpt("abcde", "ace") << endl;
     cout << getLCS("abcde", "ace") << endl;
     return 0;

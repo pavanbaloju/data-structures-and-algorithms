@@ -23,11 +23,9 @@ int longestCommonSubsequence(string s, string t)
     return longest(ss - 1, ts - 1, s, t, dp);
 }
 
-int longestCommonSubsequenceTable(string s, string t)
+int longestCommonSubsequenceTableUtil(string s, string t, vector<vector<int>> &dp)
 {
     int ss = s.size(), ts = t.size();
-    // +1 to shift base case ind == -1 to ind == 0
-    vector<vector<int>> dp(ss + 1, vector<int>(ts + 1, -1));
 
     for (int si = 0; si <= ss; si++)
     {
@@ -50,6 +48,13 @@ int longestCommonSubsequenceTable(string s, string t)
 
     return dp[ss][ts];
 }
+int longestCommonSubsequenceTable(string s, string t)
+{
+    int ss = s.size(), ts = t.size();
+    // +1 to shift base case ind == -1 to ind == 0
+    vector<vector<int>> dp(ss + 1, vector<int>(ts + 1, -1));
+    return longestCommonSubsequenceTableUtil(s, t, dp);
+}
 
 int longestCommonSubsequenceOpt(string s, string t)
 {
@@ -71,10 +76,39 @@ int longestCommonSubsequenceOpt(string s, string t)
     return prev[ts];
 }
 
+string getLCS(string s, string t)
+{
+    int ss = s.size(), ts = t.size();
+    vector<vector<int>> dp(ss + 1, vector<int>(ts + 1, -1));
+    int len = longestCommonSubsequenceTableUtil(s, t, dp);
+
+    string lcs = string(len, '$');
+    int si = ss, ti = ts;
+    while (si > 0 && ti > 0)
+    {
+        if (s[si - 1] == t[ti - 1])
+        {
+            lcs[--len] = s[si - 1];
+            si--;
+            ti--;
+        }
+        else if (s[si - 1] > t[ti - 1])
+        {
+            si--;
+        }
+        else
+        {
+            ti--;
+        }
+    }
+    return lcs;
+}
+
 int main()
 {
     cout << longestCommonSubsequence("abcde", "ace") << endl;
     cout << longestCommonSubsequenceTable("abcde", "ace") << endl;
     cout << longestCommonSubsequenceOpt("abcde", "ace") << endl;
+    cout << getLCS("abcde", "ace") << endl;
     return 0;
 }

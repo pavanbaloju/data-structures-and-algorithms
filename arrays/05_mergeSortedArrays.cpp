@@ -2,63 +2,101 @@
 #include <vector>
 using namespace std;
 
-void merge(vector<int> &nums1, int m, vector<int> &nums2, int n)
+// Function to merge two sorted arrays using extra space
+vector<int> mergeArraysExtraSpace(const vector<int> &arr1, const vector<int> &arr2)
 {
-    vector<int> temp;
+    vector<int> merged;
     int i = 0, j = 0;
-    while (i < m && j < n)
+
+    // Merge elements until one of the arrays is fully processed
+    while (i < arr1.size() && j < arr2.size())
     {
-        if (nums1[i] <= nums2[j])
+        if (arr1[i] < arr2[j])
         {
-            temp.push_back(nums1[i++]);
+            merged.push_back(arr1[i]);
+            ++i;
         }
         else
         {
-            temp.push_back(nums2[j++]);
+            merged.push_back(arr2[j]);
+            ++j;
         }
     }
-    while (i < m)
+
+    // Add remaining elements from the non-empty array
+    while (i < arr1.size())
     {
-        temp.push_back(nums1[i++]);
+        merged.push_back(arr1[i]);
+        ++i;
     }
-    while (j < n)
+    while (j < arr2.size())
     {
-        temp.push_back(nums2[j++]);
+        merged.push_back(arr2[j]);
+        ++j;
     }
 
-    for (int i = 0; i < m + n; i++)
-    {
-        nums1[i] = temp[i];
-    }
+    return merged;
 }
 
-void merge2(vector<int> &nums1, int m, vector<int> &nums2, int n)
+// Function to merge two sorted arrays in-place
+void mergeArraysInPlace(vector<int> &firstArray, vector<int> &secondArray)
 {
-    int i = m - 1;
-    int j = n - 1;
-    int k = m + n - 1;
+    int m = firstArray.size();
+    int n = secondArray.size();
+    int i = m - 1;     // Pointer for firstArray
+    int j = n - 1;     // Pointer for secondArray
+    int k = m + n - 1; // Pointer for the merged array
+    firstArray.resize(k + 1);
 
-    while (j >= 0)
+    // Merge elements until one of the arrays is fully processed
+    while (i >= 0 && j >= 0)
     {
-        if (i >= 0 && nums1[i] > nums2[j])
+        if (firstArray[i] > secondArray[j])
         {
-            nums1[k--] = nums1[i--];
+            firstArray[k--] = firstArray[i--];
         }
         else
         {
-            nums1[k--] = nums2[j--];
+            firstArray[k--] = secondArray[j--];
         }
+    }
+
+    // Add remaining elements from secondArray to firstArray if any
+    while (j >= 0)
+    {
+        firstArray[k--] = secondArray[j--];
     }
 }
 
 int main()
 {
-    vector<int> nums1 = {1, 2, 3, 0, 0, 0};
-    vector<int> nums2 = {2, 5, 6};
-    merge2(nums1, 3, nums2, 3);
-    for (int num : nums1)
+    // First sorted array
+    vector<int> firstSortedArray = {1, 3, 5, 7};
+
+    // Second sorted array
+    vector<int> secondSortedArray = {2, 4};
+
+    // Merge arrays using extra space
+    vector<int> mergedExtraSpace = mergeArraysExtraSpace(firstSortedArray, secondSortedArray);
+
+    // Display merged array using extra space
+    cout << "Merged array using extra space: ";
+    for (int num : mergedExtraSpace)
     {
         cout << num << " ";
     }
+    cout << endl;
+
+    // Merge arrays in-place
+    mergeArraysInPlace(firstSortedArray, secondSortedArray);
+
+    // Display merged array in-place
+    cout << "Merged array in-place: ";
+    for (int num : firstSortedArray)
+    {
+        cout << num << " ";
+    }
+    cout << endl;
+
     return 0;
 }

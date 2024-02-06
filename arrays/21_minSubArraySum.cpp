@@ -2,31 +2,16 @@
 #include <vector>
 using namespace std;
 
-int minSubArrayLenTLE(int target, vector<int> &nums)
-{
-    int count = nums.size();
-    long long sum = 0;
-    int size = 0, minSize = INT_MAX;
-    for (int i = 0, j = i; i < count && j < count;)
-    {
-        sum += nums[j];
-        if (sum >= target)
-        {
-            minSize = (++size) < minSize ? size : minSize;
-            size = 0;
-            sum = 0;
-            i++;
-            j = i;
-        }
-        else
-        {
-            j++;
-            size++;
-        }
-    }
-    return minSize != INT_MAX ? minSize : 0;
-}
-
+// Function to find the minimum size of a contiguous subarray whose sum is greater than or equal to the target.
+// Approach:
+// We use a two-pointer sliding window approach.
+// 1. Initialize two pointers, start and end, both pointing to the beginning of the array.
+// 2. Move the end pointer to the right until the sum of the subarray[start:end] is less than the target.
+// 3. Update the minimum length if the current subarray length is smaller.
+// 4. Move the start pointer to the right until the sum becomes less than the target again.
+// 5. Repeat steps 2-4 until the end of the array is reached.
+// Time complexity: O(n), where n is the size of the input array.
+// Space complexity: O(1).
 int minSubArrayLen(int target, vector<int> &nums)
 {
     int minLen = INT_MAX;
@@ -41,12 +26,15 @@ int minSubArrayLen(int target, vector<int> &nums)
     }
     return minLen == INT_MAX ? 0 : minLen;
 }
+
 int main()
 {
+    // Test cases
     vector<int> nums = {2, 3, 1, 2, 4, 3};
     cout << minSubArrayLen(7, nums) << endl;
-    ;
+
     vector<int> nums2 = {1, 1, 1, 1, 1, 1, 1, 1};
     cout << minSubArrayLen(11, nums2) << endl;
+
     return 0;
 }

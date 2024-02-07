@@ -3,9 +3,14 @@
 using namespace std;
 
 // Function to rotate an array by 1 place k times (inefficient approach).
+// Problem Statement:
+// Given an array nums, rotate the array to the right by k steps.
 // Intuition:
 // This approach rotates the array by one position k times. For each rotation,
 // it moves each element of the array one position to the right.
+// Approach:
+// Loop through the rotation k times and, for each rotation, shift each element
+// of the array one position to the right.
 // Time complexity: O(n*k), where n is the size of the array and k is the number of rotations.
 // Space complexity: O(1), no extra space used besides variables.
 void rotate2(vector<int> &nums, int k)
@@ -14,6 +19,7 @@ void rotate2(vector<int> &nums, int k)
     while (j++ < k)
     {
         int prev = nums[0];
+        // Rotate each element to the right by one position.
         for (int i = 1; i <= n; i++)
         {
             swap(prev, nums[i % n]);
@@ -22,10 +28,15 @@ void rotate2(vector<int> &nums, int k)
 }
 
 // Function to rotate an array by k places at once (efficient approach).
+// Problem Statement:
+// Given an array nums, rotate the array to the right by k steps.
 // Intuition:
 // This approach rotates the array by k places at once using the cyclic rotation technique.
 // It first calculates the effective rotation count (k % n) to avoid unnecessary rotations.
 // Then, it iterates through the array, swapping elements according to the rotation logic.
+// Approach:
+// Calculate the effective rotation count (k % n) to avoid unnecessary rotations.
+// Iterate through the array and swap elements according to the rotation logic.
 // Time complexity: O(n), where n is the size of the array.
 // Space complexity: O(1), no extra space used besides variables.
 void rotate(vector<int> &nums, int k)
@@ -38,7 +49,9 @@ void rotate(vector<int> &nums, int k)
     k %= n; // Effective rotation count
     for (int counter = 0, i = k; counter < n; i = (i + k) % n, counter++)
     {
+        // Swap elements to perform rotation.
         swap(temp, nums[i]);
+        // Check if the cycle is complete.
         if (i == start)
         {
             start++;
@@ -48,9 +61,14 @@ void rotate(vector<int> &nums, int k)
 }
 
 // Function to rotate an array by k places using reverse.
+// Problem Statement:
+// Given an array nums, rotate the array to the right by k steps.
 // Intuition:
 // This approach first reverses the entire array. Then, it reverses the first k elements
 // and the remaining elements separately. Finally, it reverts the entire array to get the rotated array.
+// Approach:
+// Reverse the entire array, then reverse the first k elements and the remaining elements separately.
+// Finally, revert the entire array to get the rotated array.
 // Time complexity: O(n), where n is the size of the array.
 // Space complexity: O(1), no extra space used besides variables.
 void rotate3(vector<int> &nums, int k)

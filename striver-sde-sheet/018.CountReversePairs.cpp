@@ -85,7 +85,7 @@ int countPairs(vector<int> &arr, int low, int mid, int high)
     for (int i = low; i <= mid; i++)
     {
         // Increment 'right' until we find an element greater than or equal to 2 * arr[i].
-        while (right <= high && arr[i] > 2 * arr[right])
+        while (right <= high && arr[i] > (long long) 2 * arr[right])
             right++;
         
         // Add the count of reverse pairs for the current element.
@@ -117,8 +117,9 @@ int mergeSort(vector<int> &arr, int low, int high)
 }
 
 // Function to compute the number of reverse pairs in the given array.
-int reversePairs(vector<int> &arr, int n)
+int reversePairs(vector<int> &arr)
 {
+    int n = arr.size();
     return mergeSort(arr, 0, n - 1);
 }
 

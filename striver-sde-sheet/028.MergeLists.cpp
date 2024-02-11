@@ -16,17 +16,28 @@ struct ListNode
     }
 };
 
-// Function to merge two sorted linked lists iteratively.
+// Function to merge two sorted linked lists.
+// Intuition:
+// We initialize a dummy node to hold the merged list.
+// We then traverse both input lists simultaneously, comparing the values of their nodes.
+// We append the smaller node to the merged list and move the corresponding pointer forward.
+// Once one of the lists is exhausted, we append the remaining nodes of the other list to the merged list.
+// Approach:
+// - Initialize a dummy node and a current pointer to hold the merged list.
+// - Traverse both input lists simultaneously:
+//   - Compare the values of the current nodes of the input lists.
+//   - Append the smaller node to the merged list and move the corresponding pointer forward.
+// - Append the remaining nodes of the non-empty list to the merged list.
+// - Return the merged list.
+// Time Complexity: O(n + m), where n and m are the lengths of the input lists.
+// Space Complexity: O(1), constant space used.
 ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
 {
-    // Create a dummy node to hold the merged list and a current pointer to iterate.
     ListNode *dummy = new ListNode(0), *curr = dummy;
 
-    // Iterate until one of the input lists is exhausted.
+    // Traverse both lists until one of them is exhausted.
     while (list1 && list2)
     {
-        // Compare the values of the current nodes of both lists.
-        // Append the smaller node to the merged list and move the corresponding pointer forward.
         if (list1->val < list2->val)
         {
             curr->next = list1;
@@ -37,7 +48,7 @@ ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
             curr->next = list2;
             list2 = list2->next;
         }
-        curr = curr->next; // Move the current pointer forward.
+        curr = curr->next;
     }
 
     // Append the remaining nodes of the non-empty list to the merged list.
@@ -59,6 +70,19 @@ ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
 }
 
 // Function to merge two sorted linked lists recursively.
+// Intuition:
+// The recursive approach mimics the iterative approach.
+// We compare the values of the current nodes of the input lists and recursively merge the rest of the lists.
+// We return the merged list when one of the lists is exhausted.
+// Approach:
+// - Base cases:
+//   - If one of the input lists is null, return the other list.
+// - Compare the values of the current nodes of the input lists:
+//   - Select the smaller node as the head of the merged list.
+//   - Recursively merge the rest of the lists starting from the next node of the selected node.
+// - Return the head of the merged list.
+// Time Complexity: O(n + m), where n and m are the lengths of the input lists.
+// Space Complexity: O(n + m), where n and m are the lengths of the input lists (due to recursive calls).
 ListNode *mergeTwoListsRecursive(ListNode *list1, ListNode *list2)
 {
     // Base cases: if one of the lists is null, return the other list.

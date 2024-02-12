@@ -9,7 +9,11 @@ using namespace std;
 // Intuition: For each block, find the maximum heights of blocks to its left and right.
 //            Then, the amount of water that can be trapped at this block is determined by the minimum of these maximum heights minus the height of the current block.
 //            Add up the trapped water for each block to get the total trapped rainwater.
-// Approach: Brute force approach iterates through each block and calculates the trapped water using the maximum heights of blocks to its left and right.
+// Approach:
+// 1. Iterate through each block from index 1 to n-2.
+// 2. For each block, find the maximum heights of blocks to its left and right using nested loops.
+// 3. Calculate the trapped water at this block using the minimum of maximum heights and subtracting the current block's height.
+// 4. Add up the trapped water for each block to get the total trapped rainwater.
 // Time Complexity: O(n^2), where n is the size of the input array.
 //                  Two nested loops are used to find the maximum heights to the left and right of each block.
 // Space Complexity: O(1), no extra space is used other than a few variables.
@@ -42,8 +46,11 @@ int trapBrute(vector<int> &arr)
 // Function to calculate the trapped rainwater using pre-calculation approach
 // Intuition: Pre-calculate the maximum heights of blocks to the left and right of each block.
 //            Then, for each block, calculate the trapped water using the pre-calculated maximum heights.
-// Approach: Pre-calculate the maximum heights of blocks to the left and right of each block.
-//           Then, iterate through the array and calculate the trapped water for each block using the pre-calculated maximum heights.
+// Approach:
+// 1. Create two arrays to store the maximum heights to the left and right of each block.
+// 2. Iterate through the array from left to right to calculate the maximum heights to the left of each block.
+// 3. Iterate through the array from right to left to calculate the maximum heights to the right of each block.
+// 4. Iterate through the array once again to calculate the trapped water at each block using the pre-calculated maximum heights.
 // Time Complexity: O(n), where n is the size of the input array.
 // Space Complexity: O(n), where n is the size of the input array.
 int trapWithPrecalculate(vector<int> &height)
@@ -73,8 +80,11 @@ int trapWithPrecalculate(vector<int> &height)
 // Function to calculate the trapped rainwater using two-pointer approach
 // Intuition: Use two pointers to maintain the maximum heights of blocks to the left and right of the current block.
 //            Move the pointers inward, updating the maximum heights and calculating the trapped water as needed.
-// Approach: Use two pointers to maintain the maximum heights of blocks to the left and right of the current block.
-//           Move the pointers inward, updating the maximum heights and calculating the trapped water as needed.
+// Approach:
+// 1. Initialize left and right pointers at the beginning and end of the array, respectively.
+// 2. Initialize variables to keep track of the maximum heights to the left and right of the current block.
+// 3. Move the pointers inward, updating the maximum heights and calculating the trapped water as needed.
+// 4. Repeat until the left pointer is less than or equal to the right pointer.
 // Time Complexity: O(n), where n is the size of the input array.
 //                  The two-pointer approach iterates through the array only once.
 // Space Complexity: O(1), no extra space is used other than a few variables.

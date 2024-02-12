@@ -14,7 +14,17 @@ void print(vector<vector<int>> &matrix)
     }
 }
 
+// Problem Statement:
+// Given a matrix of integers, modify it in-place such that if an element is 0, its entire row and column are set to 0.
+
 // Method 1: Set Zeroes (Brute Force)
+// Intuition:
+// - Use sets to mark rows and columns containing 0s.
+// - Iterate through the matrix to find 0s and mark their rows and columns.
+// - Iterate through the matrix again to set 0s in marked rows and columns.
+// Approach:
+// - Iterate through the matrix to find 0s and mark their rows and columns using sets.
+// - Iterate through the matrix again to set 0s in marked rows and columns.
 // Time Complexity: O(m*n), where m is the number of rows and n is the number of columns.
 // Space Complexity: O(m + n) - The sets 'rows' and 'cols' may store at most m + n elements.
 void setZeroes(vector<vector<int>> &matrix)
@@ -48,6 +58,13 @@ void setZeroes(vector<vector<int>> &matrix)
 }
 
 // Method 2: Set Zeroes (Optimized)
+// Intuition:
+// - Use the first row and column of the matrix to mark rows and columns containing 0s.
+// - Iterate through the matrix, mark rows and columns with 0s using the first row and column.
+// - Set 0s in the matrix based on marks made in the first row and column.
+// Approach:
+// - Mark rows and columns with 0s using the first row and column.
+// - Set 0s in the matrix based on marks made in the first row and column.
 // Time Complexity: O(m*n), where m is the number of rows and n is the number of columns.
 // Space Complexity: O(1) - Only constant extra space is used.
 void setZeroesOpt(vector<vector<int>> &matrix)
@@ -56,7 +73,7 @@ void setZeroesOpt(vector<vector<int>> &matrix)
     int m = matrix[0].size(); // Number of columns.
     bool col0 = false;        // Flag to track if first column needs to be zeroed.
 
-    // Mark rows and columns with 0s using first row and column.
+    // Mark rows and columns with 0s using the first row and column.
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
@@ -72,7 +89,7 @@ void setZeroesOpt(vector<vector<int>> &matrix)
         }
     }
 
-    // Set 0s in matrix based on marks made in first row and column.
+    // Set 0s in the matrix based on marks made in the first row and column.
     for (int i = 1; i < n; i++)
     {
         for (int j = 1; j < m; j++)
@@ -110,9 +127,14 @@ int main()
          {3, 4, 5, 2},
          {1, 3, 1, 5}};
 
+    cout << "Original Matrix:" << endl;
+    print(matrix);
+    cout << endl;
+
     // Call the optimized setZeroes function to modify the matrix in-place.
     setZeroesOpt(matrix);
 
+    cout << "Modified Matrix:" << endl;
     // Print the modified matrix.
     print(matrix);
 

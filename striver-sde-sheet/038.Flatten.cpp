@@ -97,7 +97,6 @@ int main()
     Node *res = flatten(headA);
 
     // Print the flattened doubly linked list
-    cout << endl;
     while (res)
     {
         cout << res->val << " ";

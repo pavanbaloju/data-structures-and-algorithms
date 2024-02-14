@@ -3,10 +3,14 @@
 using namespace std;
 
 // Problem Statement:
-// Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order. The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+// Given an array of distinct integers candidates and a target integer target, 
+// return a list of all unique combinations of candidates where the chosen numbers sum to target. 
+// You may return the combinations in any order. The same number may be chosen from candidates an unlimited number of times. 
+// Two combinations are unique if the frequency of at least one of the chosen numbers is different.
 
 // Intuition:
-// Use backtracking to explore all possible combinations. Start with an empty combination and recursively add numbers from the candidates array to form combinations that sum up to the target.
+// Use backtracking to explore all possible combinations. 
+// Start with an empty combination and recursively add numbers from the candidates array to form combinations that sum up to the target.
 
 // DSA Strategy:
 // Backtracking

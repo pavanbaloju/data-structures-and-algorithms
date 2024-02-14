@@ -48,18 +48,18 @@ void solve(int index, vector<int> &nums, vector<int> &comb, vector<vector<int>> 
         if (i > index && nums[i] == nums[i - 1])
             continue;
 
-        // If the current element is greater than the remaining target, stop the loop
-        if (nums[i] > target)
-            break;
+        // If the current element is less than the remaining target
+        if (nums[i] <= target)
+        {
+            // Include the current element in the combination
+            comb.push_back(nums[i]);
 
-        // Include the current element in the combination
-        comb.push_back(nums[i]);
+            // Recursive call with updated index and target
+            solve(i + 1, nums, comb, ans, target - nums[i]);
 
-        // Recursive call with updated index and target
-        solve(i + 1, nums, comb, ans, target - nums[i]);
-
-        // Backtrack: Remove the current element from the combination
-        comb.pop_back();
+            // Backtrack: Remove the current element from the combination
+            comb.pop_back();
+        }
     }
 }
 
@@ -72,6 +72,56 @@ vector<vector<int>> combinationSum2(vector<int> &candidates, int target)
     sort(candidates.begin(), candidates.end());
     // Call the recursive function
     solve(0, candidates, comb, ans, target);
+    return ans;
+}
+
+// another way of implementation without loop
+void solveOpt(int index, vector<int> &nums, vector<int> &comb, vector<vector<int>> &ans, int target)
+{
+    // Base case: If the target sum is 0, add the combination to the result
+    if (target == 0)
+    {
+        ans.push_back(comb);
+        return;
+    }
+
+    // Base case: If we've reached the end of the array or the target is negative, return
+    if (index == nums.size() || target < 0)
+        return;
+
+    // Skip duplicates
+    if (index > 0 && nums[index] == nums[index - 1])
+    {
+        // don't consider and just go for next index
+        solveOpt(index + 1, nums, comb, ans, target);
+        return;
+    }
+    else // process this index
+    {
+        // Include the current element in the combination
+        comb.push_back(nums[index]);
+        // Recursive call with the updated index and target
+        solveOpt(index + 1, nums, comb, ans, target - nums[index]);
+        // Backtrack: Remove the current element from the combination
+        comb.pop_back();
+
+        // Exclude the current element in the combination
+        solveOpt(index + 1, nums, comb, ans, target);
+    }
+}
+
+// Function to find unique combinations that sum up to the target
+vector<vector<int>> combinationSum2Opt(vector<int> &candidates, int target)
+{
+    vector<vector<int>> ans;
+    vector<int> comb;
+
+    // Sort the input array to handle duplicates properly
+    sort(candidates.begin(), candidates.end());
+
+    // Call the recursive function
+    solve(0, candidates, comb, ans, target);
+
     return ans;
 }
 

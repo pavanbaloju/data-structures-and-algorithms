@@ -26,20 +26,20 @@ double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2)
     while (i < n1 && j < n2)
     {
         if (nums1[i] < nums2[j])
-            arr3.push_back(nums1[i++]);
+            arr3.push_back(nums1[i++]); // Add the element from nums1 to arr3 and increment the index of nums1
         else
-            arr3.push_back(nums2[j++]);
+            arr3.push_back(nums2[j++]); // Add the element from nums2 to arr3 and increment the index of nums2
     }
     while (i < n1)
-        arr3.push_back(nums1[i++]);
+        arr3.push_back(nums1[i++]); // Add the remaining elements from nums1 to arr3
     while (j < n2)
-        arr3.push_back(nums2[j++]);
+        arr3.push_back(nums2[j++]); // Add the remaining elements from nums2 to arr3
 
     int n = n1 + n2;
     if (n % 2)
-        return (double)arr3[n / 2];
+        return (double)arr3[n / 2]; // If the size of arr3 is odd, return the middle element as the median
 
-    return n % 2 ? (double)arr3[n / 2]
+    return n % 2 ? (double)arr3[n / 2] // If the size of arr3 is even, return the average of the middle two elements as the median
                  : ((double)arr3[n / 2] + (double)arr3[(n / 2) - 1]) / 2.0;
 }
 
@@ -71,18 +71,18 @@ double findMedianSortedArraysBetter(vector<int> &nums1, vector<int> &nums2)
         if (nums1[i] < nums2[j])
         {
             if (cnt == ind1)
-                ind1el = nums1[i];
+                ind1el = nums1[i]; // Store the element from nums1 at index ind1
             if (cnt == ind2)
-                ind2el = nums1[i];
+                ind2el = nums1[i]; // Store the element from nums1 at index ind2
             cnt++;
             i++;
         }
         else
         {
             if (cnt == ind1)
-                ind1el = nums2[j];
+                ind1el = nums2[j]; // Store the element from nums2 at index ind1
             if (cnt == ind2)
-                ind2el = nums2[j];
+                ind2el = nums2[j]; // Store the element from nums2 at index ind2
             cnt++;
             j++;
         }
@@ -91,9 +91,9 @@ double findMedianSortedArraysBetter(vector<int> &nums1, vector<int> &nums2)
     while (i < n1)
     {
         if (cnt == ind1)
-            ind1el = nums1[i];
+            ind1el = nums1[i]; // Store the remaining elements from nums1 at index ind1
         if (cnt == ind2)
-            ind2el = nums1[i];
+            ind2el = nums1[i]; // Store the remaining elements from nums1 at index ind2
         cnt++;
         i++;
     }

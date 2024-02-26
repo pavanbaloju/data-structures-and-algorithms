@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+// https://takeuforward.org/data-structure/median-of-two-sorted-arrays-of-different-sizes/
 
 // Problem Statement:
 // Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
@@ -62,7 +63,7 @@ double findMedianSortedArraysBetter(vector<int> &nums1, vector<int> &nums2)
     int ind2 = n / 2;
     int ind1 = ind2 - 1;
 
-    int cnt = 0;
+    int count = 0;
     int ind1el = -1, ind2el = -1;
 
     int i = 0, j = 0;
@@ -70,40 +71,40 @@ double findMedianSortedArraysBetter(vector<int> &nums1, vector<int> &nums2)
     {
         if (nums1[i] < nums2[j])
         {
-            if (cnt == ind1)
+            if (count == ind1)
                 ind1el = nums1[i]; // Store the element from nums1 at index ind1
-            if (cnt == ind2)
+            if (count == ind2)
                 ind2el = nums1[i]; // Store the element from nums1 at index ind2
-            cnt++;
+            count++;
             i++;
         }
         else
         {
-            if (cnt == ind1)
+            if (count == ind1)
                 ind1el = nums2[j]; // Store the element from nums2 at index ind1
-            if (cnt == ind2)
+            if (count == ind2)
                 ind2el = nums2[j]; // Store the element from nums2 at index ind2
-            cnt++;
+            count++;
             j++;
         }
     }
 
     while (i < n1)
     {
-        if (cnt == ind1)
+        if (count == ind1)
             ind1el = nums1[i]; // Store the remaining elements from nums1 at index ind1
-        if (cnt == ind2)
+        if (count == ind2)
             ind2el = nums1[i]; // Store the remaining elements from nums1 at index ind2
-        cnt++;
+        count++;
         i++;
     }
     while (j < n2)
     {
-        if (cnt == ind1)
+        if (count == ind1)
             ind1el = nums2[j];
-        if (cnt == ind2)
+        if (count == ind2)
             ind2el = nums2[j];
-        cnt++;
+        count++;
         j++;
     }
 
@@ -122,47 +123,59 @@ double findMedianSortedArraysBetter(vector<int> &nums1, vector<int> &nums2)
 
 // Function to find the median of two sorted arrays using binary search
 double findMedianSortedArraysOpt(vector<int> &nums1, vector<int> &nums2)
-{
-    int n1 = nums1.size(), n2 = nums2.size();
-    if (n1 > n2)
-        return findMedianSortedArraysOpt(nums2, nums1);
-
-    int n = n1 + n2;
-    int left = (n1 + n2 + 1) / 2;
-
-    int low = 0, high = n1;
-    while (low <= high)
+{ 
+    // Ensure nums1 is the smaller array for optimization
+    if (nums1.size() > nums2.size())
     {
-        int mid1 = (low + high) / 2;
-        int mid2 = left - mid1;
-
-        int l1 = INT_MIN, l2 = INT_MIN;
-        int r1 = INT_MAX, r2 = INT_MAX;
-
-        // Boundary checks
-        if (mid1 < n1)
-            r1 = nums1[mid1];
-        if (mid2 < n2)
-            r2 = nums2[mid2];
-        if (mid1 - 1 >= 0)
-            l1 = nums1[mid1 - 1];
-        if (mid2 - 1 >= 0)
-            l2 = nums2[mid2 - 1];
-
-        if (l1 <= r2 && l2 <= r1)
-        {
-            if (n % 2 == 1)
-                return max(l1, l2);
-            else
-                return ((double)(max(l1, l2) + min(r1, r2))) / 2.0;
-        }
-        else if (l1 > r2)
-            high = mid1 - 1;
-        else
-            low = mid1 + 1;
+        return findMedianSortedArrays(nums2, nums1);
     }
-    return 0;
+
+    int m = nums1.size();
+    int n = nums2.size();
+    int left = 0, right = m;
+
+    // Perform binary search on nums1 to find the correct partition
+    while (left <= right)
+    {
+        // Calculate partition points for nums1 and nums2
+        int partitionX = (left + right) / 2;
+        int partitionY = (m + n + 1) / 2 - partitionX;
+
+        // Calculate the maximum and minimum elements on the left and right sides of partitions
+        int maxX = (partitionX == 0) ? INT_MIN : nums1[partitionX - 1];
+        int maxY = (partitionY == 0) ? INT_MIN : nums2[partitionY - 1];
+        int minX = (partitionX == m) ? INT_MAX : nums1[partitionX];
+        int minY = (partitionY == n) ? INT_MAX : nums2[partitionY];
+
+        if (maxX <= minY && maxY <= minX)
+        {
+            // Found the correct partition
+            if ((m + n) % 2 == 0)
+            {
+                // If the total number of elements is even, return the average of maximum left and minimum right elements
+                return (max(maxX, maxY) + min(minX, minY)) / 2.0;
+            }
+            else
+            {
+                // If the total number of elements is odd, return the maximum element on the left side
+                return max(maxX, maxY);
+            }
+        }
+        else if (maxX > minY)
+        {
+            // Move left in nums1
+            right = partitionX - 1;
+        }
+        else
+        {
+            // Move right in nums1
+            left = partitionX + 1;
+        }
+    }
+
+    return 0.0; // Invalid input
 }
+
 
 int main()
 {

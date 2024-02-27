@@ -19,8 +19,8 @@ using namespace std;
 // 1. Maintain a doubly linked list to store the keys in the order of their usage, with the most recently used key at the front and least recently used key at the end.
 // 2. Use a hash map to store key-value pairs, where each key maps to its corresponding node in the doubly linked list.
 // 3. For the get operation, if the key is present in the cache, move the corresponding node to the front of the list and return its value. Otherwise, return -1.
-// 4. For the put operation, if the key is already present in the cache, update its value and move the corresponding node to the front of the list. 
-//    If the key is not present and the cache is full, remove the least recently used key from the end of the list and the hash map. 
+// 4. For the put operation, if the key is already present in the cache, update its value and move the corresponding node to the front of the list.
+//    If the key is not present and the cache is full, remove the least recently used key from the end of the list and the hash map.
 //    Then, add the new key-value pair to the front of the list and the hash map.
 // 5. Time complexity of both get and put operations is O(1) since hash map provides constant time access and doubly linked list allows constant time node insertion and deletion.
 
@@ -109,11 +109,13 @@ public:
     int get(int key)
     {
         if (map.find(key) != map.end())
-        {                                 // If key exists in the cache
-            Node *resNode = map[key];     // Get the corresponding node
-            int ans = resNode->val;       // Get the value
-            deleteNode(resNode);          // Delete the node from the list
-            deleteFromMap(key);           // Delete the key from the map
+        {                             // If key exists in the cache
+            Node *resNode = map[key]; // Get the corresponding node
+            int ans = resNode->val;   // Get the value
+
+            deleteNode(resNode); // Delete the node from the list
+            deleteFromMap(key);  // Delete the key from the map
+
             addNodeToFront(resNode);      // Add the node to the front of the list
             insertInMap(key, head->next); // Insert key-value pair into the map
             return ans;                   // Return the value
@@ -133,18 +135,17 @@ public:
         {                          // If key exists in the cache
             Node *curr = map[key]; // Get the corresponding node
             curr->val = value;     // Update the node's value
+            deleteFromMap(key);    // Delete the key from the map
             deleteNode(curr);      // Delete the node from the list
         }
-        else
-        {
-            if (map.size() == cap)
-            {                                   // If cache is full
-                deleteFromMap(tail->prev->key); // Delete the least recently used key from the map
-                deleteNode(tail->prev);         // Delete the least recently used node from the list
-            }
-            addNodeToFront(new Node(key, value)); // Add new node to the front of the list
-            insertInMap(key, head->next);         // Insert key-value pair into the map}
+
+        if (map.size() == cap)
+        {                                   // If cache is full
+            deleteFromMap(tail->prev->key); // Delete the least recently used key from the map
+            deleteNode(tail->prev);         // Delete the least recently used node from the list
         }
+        addNodeToFront(new Node(key, value)); // Add new node to the front of the list
+        insertInMap(key, head->next);         // Insert key-value pair into the map}
     }
 };
 

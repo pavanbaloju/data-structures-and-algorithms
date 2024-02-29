@@ -10,7 +10,7 @@ using namespace std;
 // To find the largest rectangle area, we need to consider each bar as the potential height of a rectangle and calculate its width by finding the range of bars that can extend to the left and right of the current bar without decreasing in height. We can use a stack-based approach to efficiently find these ranges.
 
 // DSA Strategy:
-// Stack
+// Monotonic increasing Stack
 
 // Approach 1:
 // Brute-force approach to find the largest rectangle area in a histogram
@@ -41,7 +41,11 @@ int largestRectangleAreaBruteForce(vector<int> &heights)
 // Approach 2:
 // Efficient stack-based approach to find the largest rectangle area in a histogram
 // Explanation:
-// We use a stack to maintain indices of bars in non-decreasing order of heights. For each bar, we keep popping bars from the stack while the current bar is smaller than the bar at the top of the stack. For each popped bar, we calculate the area of the rectangle formed by considering it as the height and the range of bars from its right (exclusive) to the current bar's index (inclusive) as the width. We repeat this process until the stack is empty. We update the maximum area whenever a rectangle with a larger area is found.
+// We use a stack to maintain indices of bars in non-decreasing order of heights. 
+// For each bar, we keep popping bars from the stack while the current bar is smaller than the bar at the top of the stack. 
+// For each popped bar, we calculate the area of the rectangle formed by considering it as the height 
+// and the range of bars from its right (exclusive) to the current bar's index (inclusive) as the width. 
+// We repeat this process until the stack is empty. We update the maximum area whenever a rectangle with a larger area is found.
 // Time Complexity: O(n), where n is the number of bars in the histogram.
 // Space Complexity: O(n), where n is the number of bars in the histogram (for the stack).
 int largestRectangleArea(vector<int> &heights)

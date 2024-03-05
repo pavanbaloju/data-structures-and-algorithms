@@ -42,7 +42,10 @@ vector<vector<int>> verticalOrder(TreeNode *root)
     }
 
     for (auto it : m) // Iterate through the map and add the vertical order elements to the result vector
+    {
+        sort(it.second.begin(), it.second.end()); // Sort the elements at each vertical distance
         result.push_back(it.second);
+    }
 
     return result; // Return the vertical order vector
 }
@@ -69,7 +72,10 @@ vector<vector<int>> verticalOrderRecursive(TreeNode *root)
     {
         vector<int> temp;
         for (auto i : it.second)
+        {
+            sort(i.second.begin(), i.second.end());
             temp.insert(temp.end(), i.second.begin(), i.second.end());
+        }
         result.push_back(temp);
     }
 
@@ -99,7 +105,7 @@ int main()
     printVector(result);                              // Print the vertical order vector
 
     result = verticalOrderRecursive(root); // Get the vertical order of the binary tree using a recursive approach
-    printVector(result);                    // Print the vertical order vector
+    printVector(result);                   // Print the vertical order vector
 
     return 0; // Return 0 to indicate successful completion
 }

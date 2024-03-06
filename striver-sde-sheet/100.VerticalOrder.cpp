@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include <map>
+#include <algorithm> // for sort
 using namespace std;
 
 // Definition of a binary tree node
@@ -15,97 +16,133 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-// Function to get the vertical order of a binary tree using an iterative approach
+// Problem Statement:
+// Given a binary tree, return the vertical order traversal of its nodes' values.
+// For each node at position (row, col) in the tree, its value will be appended to the vector at that position.
+
+// Intuition:
+// To perform vertical order traversal, we can use either BFS (Level Order Traversal) or DFS (Preorder Traversal) approach.
+// We will maintain a map where the key represents the horizontal distance and the value is a vector of node values at that distance.
+
+// DSA Strategy:
+// We will use a map to store the nodes based on their horizontal distance. For BFS approach, we will use a queue to perform level order traversal.
+// For DFS approach, we will use recursion to traverse the tree.
+
+// Approach (BFS):
+// 1. Create a map to store the vertical order traversal where the key is the horizontal distance and the value is a vector of node values.
+// 2. Perform level order traversal using a queue.
+// 3. Keep track of the horizontal distance of each node.
+// 4. For each node, add its value to the corresponding horizontal distance in the map.
+// 5. Sort the values at each horizontal distance.
+// 6. Finally, return the vertical order traversal.
+
+// Time Complexity: O(n log n) due to sorting at each horizontal distance.
+// Space Complexity: O(n) for storing the result and the queue.
+
 vector<vector<int>> verticalOrder(TreeNode *root)
 {
-    vector<vector<int>> result; // Create a vector of vectors to store the vertical order elements
+    vector<vector<int>> result; // Result vector to store the vertical order traversal
 
-    if (root == nullptr) // If the root is null, return the empty result vector
+    if (root == nullptr) // Check if the root is null
         return result;
 
-    map<int, vector<int>> m;        // Create a map to store the vertical distance and the value of the nodes
-    queue<pair<TreeNode *, int>> q; // Create a queue to perform level order traversal
-    q.push({root, 0});              // Push the root node and its vertical distance into the queue
+    map<int, vector<int>> m;        // Map to store the values of nodes based on their horizontal distance
+    queue<pair<TreeNode *, int>> q; // Queue to perform level order traversal
+    q.push({root, 0});              // Push the root node with horizontal distance 0 to the queue
 
-    while (!q.empty()) // Perform level order traversal until the queue is empty
+    while (!q.empty()) // Perform level order traversal
     {
-        TreeNode *temp = q.front().first; // Get the front node of the queue
-        int vDist = q.front().second;     // Get the vertical distance of the front node
-        q.pop();                          // Remove the front node from the queue
+        TreeNode *temp = q.front().first; // Get the front node from the queue
+        int hd = q.front().second;        // Get the horizontal distance of the front node
+        q.pop();                          // Pop the front node from the queue
 
-        m[vDist].push_back(temp->val); // Add the value of the front node to the map at the corresponding vertical distance
+        m[hd].push_back(temp->val); // Add the value of the current node to the corresponding horizontal distance in the map
 
-        if (temp->left != nullptr) // If the left child exists, push it into the queue with the same vertical distance
-            q.push({temp->left, vDist - 1});
-        if (temp->right != nullptr) // If the right child exists, push it into the queue with the same vertical distance
-            q.push({temp->right, vDist + 1});
+        if (temp->left != nullptr)         // If the left child exists
+            q.push({temp->left, hd - 1});  // Push the left child to the queue with updated horizontal distance
+        if (temp->right != nullptr)        // If the right child exists
+            q.push({temp->right, hd + 1}); // Push the right child to the queue with updated horizontal distance
     }
 
-    for (auto it : m) // Iterate through the map and add the vertical order elements to the result vector
+    for (auto it : m) // Iterate over the map
     {
-        sort(it.second.begin(), it.second.end()); // Sort the elements at each vertical distance
-        result.push_back(it.second);
+        sort(it.second.begin(), it.second.end()); // Sort the values at each horizontal distance
+        result.push_back(it.second);              // Add the sorted values to the result vector
     }
 
-    return result; // Return the vertical order vector
+    return result; // Return the vertical order traversal
 }
 
-void verticalOrderUtil(TreeNode *root, int vDist, int hDist, map<int, map<int, vector<int>>> &m)
+// Approach (DFS):
+// 1. Create a map to store the vertical order traversal where the key is the horizontal distance and the value is a map of vertical distance and node values.
+// 2. Implement a utility function to perform DFS traversal of the tree.
+// 3. For each node, add its value to the corresponding horizontal and vertical distances in the map.
+// 4. Sort the values at each horizontal distance.
+// 5. Finally, return the vertical order traversal.
+
+// Time Complexity: O(n log n) due to sorting at each horizontal distance.
+// Space Complexity: O(n) for storing the result and the map.
+
+void verticalOrderUtil(TreeNode *root, int hd, int vd, map<int, map<int, vector<int>>> &m)
 {
-    if (root == nullptr) // If the root is null, return
+    if (root == nullptr) // Check if the root is null
         return;
 
-    m[vDist][hDist].push_back(root->val); // Add the value of the node to the map at the corresponding vertical and horizontal distances
+    m[hd][vd].push_back(root->val); // Add the value of the current node to the corresponding horizontal and vertical distance in the map
 
-    verticalOrderUtil(root->left, vDist - 1, hDist + 1, m);  // Recursively call the left child with decreased vertical distance and increased horizontal distance
-    verticalOrderUtil(root->right, vDist + 1, hDist + 1, m); // Recursively call the right child with increased vertical distance and increased horizontal distance
+    verticalOrderUtil(root->left, hd - 1, vd + 1, m);  // Recursively call the function for the left child with updated horizontal and vertical distances
+    verticalOrderUtil(root->right, hd + 1, vd + 1, m); // Recursively call the function for the right child with updated horizontal and vertical distances
 }
 
-// Function to get the vertical order of a binary tree using a recursive approach
 vector<vector<int>> verticalOrderRecursive(TreeNode *root)
 {
-    map<int, map<int, vector<int>>> m; // Create a map to store the vertical and horizontal distances and the value of the nodes
-    verticalOrderUtil(root, 0, 0, m);  // Call the utility function to get the vertical order
+    map<int, map<int, vector<int>>> m; // Map to store the values of nodes based on their horizontal and vertical distances
+    verticalOrderUtil(root, 0, 0, m);  // Call the utility function to populate the map
 
-    vector<vector<int>> result; // Create a vector of vectors to store the vertical order elements
-    for (auto it : m)           // Iterate through the map and add the vertical order elements to the result vector
+    vector<vector<int>> result; // Result vector to store the vertical order traversal
+
+    for (auto it : m) // Iterate over the map
     {
-        vector<int> temp;
-        for (auto i : it.second)
+        vector<int> temp; // Temporary vector to store the values at each horizontal distance
+
+        for (auto i : it.second) // Iterate over the map at each horizontal distance
         {
-            sort(i.second.begin(), i.second.end());
-            temp.insert(temp.end(), i.second.begin(), i.second.end());
+            sort(i.second.begin(), i.second.end());                    // Sort the values at each vertical distance
+            temp.insert(temp.end(), i.second.begin(), i.second.end()); // Append the sorted values to the temporary vector
         }
-        result.push_back(temp);
+
+        result.push_back(temp); // Add the temporary vector to the result vector
     }
 
-    return result; // Return the vertical order vector
+    return result; // Return the vertical order traversal
 }
 
 // Function to print a vector of vectors of integers
 void printVector(vector<vector<int>> &v)
 {
-    for (vector<int> i : v) // Iterate through the vector of vectors
+    for (vector<int> i : v)
     {
-        for (int j : i) // Iterate through the inner vector and print the elements
+        for (int j : i)
             cout << j << " ";
-        cout << endl; // Print a new line after printing the inner vector
+        cout << endl;
     }
 }
 
 int main()
 {
-    TreeNode *root = new TreeNode(3); // Create a binary tree
+    TreeNode *root = new TreeNode(3);
     root->left = new TreeNode(9);
     root->right = new TreeNode(20);
     root->right->left = new TreeNode(15);
     root->right->right = new TreeNode(7);
 
-    vector<vector<int>> result = verticalOrder(root); // Get the vertical order of the binary tree
-    printVector(result);                              // Print the vertical order vector
+    cout << "Vertical Order (BFS):" << endl;
+    vector<vector<int>> result1 = verticalOrder(root);
+    printVector(result1);
 
-    result = verticalOrderRecursive(root); // Get the vertical order of the binary tree using a recursive approach
-    printVector(result);                   // Print the vertical order vector
+    cout << "Vertical Order (DFS):" << endl;
+    vector<vector<int>> result2 = verticalOrderRecursive(root);
+    printVector(result2);
 
-    return 0; // Return 0 to indicate successful completion
+    return 0;
 }

@@ -51,10 +51,10 @@ void inOrderTraversal(TreeNode *root)
 }
 
 // Function to recursively build the binary tree from postorder traversal sequence
-TreeNode *build(vector<int> &postorder, int start, int end, unordered_map<int, int> &m)
+TreeNode *build(vector<int> &postorder, int inStart, int inEnd, unordered_map<int, int> &m)
 {
     // Base case: If the start index exceeds the end index or the postorder vector is empty, return nullptr
-    if (start > end || postorder.empty())
+    if (inStart > inEnd || postorder.empty())
     {
         return nullptr;
     }
@@ -66,9 +66,9 @@ TreeNode *build(vector<int> &postorder, int start, int end, unordered_map<int, i
     // Find the index of the root value in the inorder traversal
     int rootIdx = m[root->val];
     // Recursively build the right subtree
-    root->right = build(postorder, rootIdx + 1, end, m);
+    root->right = build(postorder, rootIdx + 1, inEnd, m);
     // Recursively build the left subtree
-    root->left = build(postorder, start, rootIdx - 1, m);
+    root->left = build(postorder, inStart, rootIdx - 1, m);
 
     return root;
 }

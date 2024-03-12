@@ -67,12 +67,12 @@ bool canFinishTopoBFS(int V, vector<vector<int>> &prerequisites)
         }
     }
 
-    vector<int> ans;
+    int count = 0;
     while (!q.empty())
     {
         int v = q.front();
         q.pop();
-        ans.push_back(v);
+        count++;
 
         for (int neighbour : E[v])
         {
@@ -82,7 +82,7 @@ bool canFinishTopoBFS(int V, vector<vector<int>> &prerequisites)
             }
         }
     }
-    return ans.size() == V;
+    return count == V;
 }
 
 int main()

@@ -1,9 +1,9 @@
-#include <iostream>
-#include <vector>
-#include <stack>
-#include <climits> // For INT_MAX
+#include <iostream> // Include the input/output stream library
+#include <vector>   // Include the vector library
+#include <stack>    // Include the stack library
+#include <climits>  // Include the limits library for INT_MAX
 
-using namespace std;
+using namespace std; // Use the standard namespace
 
 // Structure to represent an edge in the graph
 struct Edge
@@ -11,6 +11,30 @@ struct Edge
     int dest;   // Destination vertex of the edge
     int weight; // Weight of the edge (for weighted graphs)
 };
+
+// Problem Statement:
+// Given a directed acyclic graph (DAG) represented as an adjacency list and a source vertex,
+// find the shortest distances from the source vertex to all other vertices.
+
+// Intuition:
+// Topological sorting of vertices in a DAG provides a linear ordering of the vertices
+// such that for every directed edge uv from vertex u to vertex v, u comes before v in the ordering.
+// Using this property, we can traverse the vertices in topological order and relax the edges to find the shortest paths.
+
+// DSA Strategy/Pattern:
+// Graph Traversal (Topological Sorting) + Shortest Path Algorithm (Relaxation)
+
+// Approach:
+// 1. Perform topological sorting of the vertices in the DAG.
+// 2. Initialize distances array with maximum values except for the source vertex, which is set to 0.
+// 3. Traverse vertices in topological order and relax edges:
+//    - If the distance to the current vertex is not maximum, iterate over its adjacent vertices.
+//    - Relax the edge if a shorter path is found by updating the distance to the destination vertex.
+// 4. After the traversal, the distances array contains the shortest distances from the source vertex to all other vertices.
+
+// Time Complexity: O(V + E), where V is the number of vertices and E is the number of edges.
+//                  Each vertex and edge are visited at most once during the topological sorting and relaxation process.
+// Space Complexity: O(V), where V is the number of vertices, for storing the distances, visited array, and stack.
 
 // Perform topological sorting of vertices in the DAG
 void topologicalSort(int v, const vector<vector<Edge>> &adjList, vector<bool> &visited, stack<int> &stk)

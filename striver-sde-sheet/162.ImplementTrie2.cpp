@@ -176,41 +176,29 @@ public:
     }
 };
 
-int main()
-{
-    int n = 5;                                                      // Number of operations
-    vector<int> type = {1, 1, 2, 3, 2};                             // Operation type (1: insert, 2: search, 3: startsWith)
+int main() {
+    // Example usage
+    int n = 5; // Number of operations
+    vector<int> type = {1, 1, 2, 3, 2}; // Operation type (1: insert, 2: search, 3: startsWith)
     vector<string> value = {"hello", "help", "help", "hel", "hel"}; // Values for the operations
-    Trie trie;                                                      // Create a Trie object
+    Trie trie; // Create a Trie object
 
     // Perform the operations
-    for (int i = 0; i < n; i++)
-    {
-        if (type[i] == 1)
-        {
+    for (int i = 0; i < n; i++) {
+        if (type[i] == 1) {
             trie.insert(value[i]); // Insert the value into the Trie
-        }
-        else if (type[i] == 2)
-        {
+        } else if (type[i] == 2) {
             // Check if the value exists in the Trie and print the result
-            if (trie.search(value[i]))
-            {
+            if (trie.countWordsEqualTo(value[i])) {
                 cout << "true" << endl;
-            }
-            else
-            {
+            } else {
                 cout << "false" << endl;
             }
-        }
-        else
-        {
+        } else {
             // Check if any word in the Trie starts with the given prefix and print the result
-            if (trie.startsWith(value[i]))
-            {
+            if (trie.countWordsStartsWith(value[i])) {
                 cout << "true" << endl;
-            }
-            else
-            {
+            } else {
                 cout << "false" << endl;
             }
         }

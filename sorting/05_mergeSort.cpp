@@ -26,42 +26,40 @@ using namespace std;
 // Space Complexity: O(n), as additional space is used for creating temporary arrays during the merge operation.
 
 // Function to merge two sorted subarrays into a single sorted array.
-void merge(vector<int> &nums, int start, int end)
-{
-    // Calculate the middle index of the array.
-    int mid = (start + end) / 2;
-    // Calculate the lengths of the left and right subarrays.
-    int len1 = mid - start + 1;
-    int len2 = end - mid;
+void merge(vector<int> &arr, int low, int mid, int high) {
+    vector<int> temp; // temporary array
+    int left = low;      // starting index of left half of arr
+    int right = mid + 1;   // starting index of right half of arr
 
-    // Create temporary arrays to store the left and right subarrays.
-    vector<int> left(len1);
-    vector<int> right(len2);
-
-    // Copy elements from the original array to the left and right subarrays.
-    for (int i = 0; i < len1; i++)
-        left[i] = nums[start + i];
-
-    for (int i = 0; i < len2; i++)
-        right[i] = nums[mid + 1 + i];
-
-    // Merge the left and right subarrays while maintaining the order.
-    int il = 0, ir = 0, idx = start;
-    while (il < len1 && ir < len2)
-    {
-        if (left[il] <= right[ir])
-            nums[idx++] = left[il++]; // Copy the smaller element from the left subarray.
-        else
-            nums[idx++] = right[ir++]; // Copy the smaller element from the right subarray.
+    //storing elements in the temporary array in a sorted manner//
+    while (left <= mid && right <= high) {
+        if (arr[left] <= arr[right]) {
+            temp.push_back(arr[left]);
+            left++;
+        }
+        else {
+            temp.push_back(arr[right]);
+            right++;
+        }
     }
 
-    // Copy the remaining elements from the left subarray, if any.
-    while (il < len1)
-        nums[idx++] = left[il++];
+    // if elements on the left half are still left //
 
-    // Copy the remaining elements from the right subarray, if any.
-    while (ir < len2)
-        nums[idx++] = right[ir++];
+    while (left <= mid) {
+        temp.push_back(arr[left]);
+        left++;
+    }
+
+    //  if elements on the right half are still left //
+    while (right <= high) {
+        temp.push_back(arr[right]);
+        right++;
+    }
+
+    // transfering all elements from temporary to arr //
+    for (int i = low; i <= high; i++) {
+        arr[i] = temp[i - low];
+    }
 }
 
 // Recursive function to sort the array using Merge Sort.
@@ -79,7 +77,7 @@ void mergeSort(vector<int> &nums, int start, int end)
     mergeSort(nums, mid + 1, end);
 
     // Merge the sorted halves using the 'merge' function.
-    merge(nums, start, end);
+    merge(nums, start, mid, end);
 }
 
 // Main function to demonstrate Merge Sort.

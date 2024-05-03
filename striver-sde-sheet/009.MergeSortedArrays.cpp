@@ -5,21 +5,26 @@ using namespace std;
 // Problem Statement:
 // Given two sorted arrays, merge them into a single sorted array.
 
-// Method 1: Merge Two Sorted Arrays Using Extra Space
-// Approach:
-// - Initialize an empty vector to store the merged array.
-// - Use two pointers to iterate through both arrays simultaneously.
-// - Compare elements from both arrays and push the smaller one into the merged vector.
-// - Continue this process until one of the arrays is fully processed.
-// - Add the remaining elements from the non-empty array to the merged vector.
-// Time Complexity: O(m + n), where m and n are the sizes of the two input arrays.
-// Space Complexity: O(m + n), where m and n are the sizes of the two input arrays.
+// Intuition:
+// We can merge the two sorted arrays using extra space or in-place.
+
+// DSA Strategy/Pattern:
+// Two Pointers
+
+// Approach 1: Using Extra Space
+// Explanation:
+// 1. Initialize an empty vector 'merged' to store the merged array.
+// 2. Initialize two pointers, 'i' and 'j', for the two input arrays, arr1 and arr2 respectively.
+// 3. Compare elements at indices i and j of arr1 and arr2 respectively.
+// 4. Push the smaller element into the 'merged' vector and move the corresponding pointer.
+// 5. Repeat steps 3-4 until one of the arrays is fully processed.
+// 6. Add the remaining elements from the non-empty array to the 'merged' vector.
+// 7. Return the 'merged' vector.
+
 vector<int> mergeArraysExtraSpace(const vector<int> &arr1, const vector<int> &arr2)
 {
     vector<int> merged;
     int i = 0, j = 0;
-
-    // Merge elements until one of the arrays is fully processed
     while (i < arr1.size() && j < arr2.size())
     {
         if (arr1[i] < arr2[j])
@@ -33,8 +38,6 @@ vector<int> mergeArraysExtraSpace(const vector<int> &arr1, const vector<int> &ar
             ++j;
         }
     }
-
-    // Add remaining elements from the non-empty array
     while (i < arr1.size())
     {
         merged.push_back(arr1[i]);
@@ -45,28 +48,25 @@ vector<int> mergeArraysExtraSpace(const vector<int> &arr1, const vector<int> &ar
         merged.push_back(arr2[j]);
         ++j;
     }
-
     return merged;
 }
 
-// Method 2: Merge Two Sorted Arrays In-Place
-// Approach:
-// - Merge elements from the end of the first array and the end of the second array.
-// - Compare elements from both arrays and place the larger one at the end of the first array.
-// - Continue this process until one of the arrays is fully processed.
-// - If there are remaining elements in the second array, copy them to the beginning of the first array.
-// Time Complexity: O(m + n), where m and n are the sizes of the two input arrays.
-// Space Complexity: O(1), as the merging is done in-place.
+// Approach 2: In-place Merge
+// Explanation:
+// 1. Initialize pointers 'i', 'j', and 'k' to the end of the first array, end of the second array,
+//    and end of the merged array respectively.
+// 2. Compare elements at indices i and j of the two input arrays.
+// 3. Place the larger element at index k of the first array and decrement the corresponding pointer.
+// 4. Repeat step 3 until one of the arrays is fully processed.
+// 5. Add the remaining elements from the second array to the first array if any.
+// 6. Return the modified first array.
+
 void mergeArraysInPlace(vector<int> &firstArray, vector<int> &secondArray)
 {
     int m = firstArray.size();
     int n = secondArray.size();
-    int i = m - 1;     // Pointer for firstArray
-    int j = n - 1;     // Pointer for secondArray
-    int k = m + n - 1; // Pointer for the merged array
+    int i = m - 1, j = n - 1, k = m + n - 1;
     firstArray.resize(k + 1);
-
-    // Merge elements until one of the arrays is fully processed
     while (i >= 0 && j >= 0)
     {
         if (firstArray[i] > secondArray[j])
@@ -78,8 +78,6 @@ void mergeArraysInPlace(vector<int> &firstArray, vector<int> &secondArray)
             firstArray[k--] = secondArray[j--];
         }
     }
-
-    // Add remaining elements from secondArray to firstArray if any
     while (j >= 0)
     {
         firstArray[k--] = secondArray[j--];
@@ -97,8 +95,6 @@ int main()
 
     // Merge arrays using extra space
     vector<int> mergedExtraSpace = mergeArraysExtraSpace(firstSortedArray, secondSortedArray);
-
-    // Display merged array using extra space
     cout << "Merged array using extra space: ";
     for (int num : mergedExtraSpace)
     {
@@ -108,8 +104,6 @@ int main()
 
     // Merge arrays in-place
     mergeArraysInPlace(firstSortedArray, secondSortedArray);
-
-    // Display merged array in-place
     cout << "Merged array in-place: ";
     for (int num : firstSortedArray)
     {

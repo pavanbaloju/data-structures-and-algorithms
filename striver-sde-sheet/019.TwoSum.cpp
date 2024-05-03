@@ -12,7 +12,7 @@ using namespace std;
 // Function to find the indices of two numbers that add up to the target.
 // Intuition:
 // Sort the array to use two pointers technique where one pointer starts from the beginning
-// and the other pointer starts from the end. Move the pointers inward based on the sum of
+// and the other poinxter starts from the end. Move the pointers inward based on the sum of
 // the elements at the pointers compared to the target. If the sum is less than the target,
 // move the left pointer to the right to increase the sum. If the sum is greater than the target,
 // move the right pointer to the left to decrease the sum. If the sum equals the target, return

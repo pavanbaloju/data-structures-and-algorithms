@@ -24,13 +24,6 @@ using namespace std;
 // Time Complexity: O(4^n / sqrt(n)), where 'n' is the number of pairs of parentheses to be generated.
 // Space Complexity: O(4^n / sqrt(n)) for storing the result.
 
-// Function to print the generated combinations
-void print(vector<string> v)
-{
-    for (auto s : v)
-        cout << " " << s << " ";
-}
-
 // Function to recursively generate combinations of well-formed parentheses
 void solve(int left, int right, string s, vector<string> &res)
 {
@@ -41,31 +34,38 @@ void solve(int left, int right, string s, vector<string> &res)
     }
     if (left > 0)
     {
-        s.push_back('('); // Add '(' if left count is greater than zero
+        s.push_back('(');               // Add '(' if left count is greater than zero
         solve(left - 1, right, s, res); // Recursively call solve with decreased left count
-        s.pop_back(); // Backtrack by removing the last character
+        s.pop_back();                   // Backtrack by removing the last character
     }
     if (right > left)
     {
-        s.push_back(')'); // Add ')' if right count is greater than left count
+        s.push_back(')');               // Add ')' if right count is greater than left count
         solve(left, right - 1, s, res); // Recursively call solve with decreased right count
-        s.pop_back(); // Backtrack by removing the last character
+        s.pop_back();                   // Backtrack by removing the last character
     }
 }
 
 // Function to generate all combinations of well-formed parentheses
 vector<string> generateParenthesis(int n)
 {
-    vector<string> res; // Result vector to store generated combinations
-    string s = ""; // Initialize an empty string
+    vector<string> res;  // Result vector to store generated combinations
+    string s = "";       // Initialize an empty string
     solve(n, n, s, res); // Call the recursive function to generate combinations
-    return res; // Return the result vector containing all combinations
+    return res;          // Return the result vector containing all combinations
+}
+
+// Function to print the generated combinations
+void print(vector<string> v)
+{
+    for (auto s : v)
+        cout << " " << s << " ";
 }
 
 // Main function to demonstrate the generateParenthesis function
 int main()
 {
     vector<string> res = generateParenthesis(3); // Generate combinations of well-formed parentheses for n = 3
-    print(res); // Print the generated combinations
+    print(res);                                  // Print the generated combinations
     return 0;
 }

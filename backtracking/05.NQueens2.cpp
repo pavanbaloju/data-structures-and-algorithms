@@ -3,25 +3,30 @@
 using namespace std;
 
 // Problem Statement:
-// The N-Queens problem is to count the number of distinct solutions to place N queens on an N×N chessboard such that no two queens attack each other.
+// The N-Queens problem is to count the total number of distinct solutions for placing N chess queens on an N×N chessboard 
+// such that no two queens attack each other. A queen can attack horizontally, vertically, or diagonally.
 
 // Intuition:
-// Similar to the N-Queens problem, we can use backtracking to explore all possible configurations of queen placements and count the number of valid solutions.
+// We can solve the N-Queens problem using backtracking. We'll recursively explore all possible placements of queens on 
+// the chessboard, ensuring that no two queens attack each other.
 
-// DSA Strategy:
-// Recursion, Backtracking
+// DSA Strategy/Pattern: Backtracking
 
 // Approach:
-// 1. Implement a recursive function 'solve' to explore all possible configurations of queen placements.
-//    a. Base case: If the current row 'row' reaches the size of the board 'n', increment the count of valid solutions.
-//    b. For each column 'c' in the current row, check if placing a queen at position (row, c) is valid:
-//       i. Check if there is no queen in the same column, left diagonal (\), and right diagonal (/).
-//       ii. If the position is valid, mark it as a queen ('Q') and recursively call 'solve' for the next row.
-//       iii. Backtrack: Remove the queen and try the next position in the same row.
-// 2. After exploring all possible configurations, return the count of valid solutions.
-
-// Time Complexity: O(N!), where N is the size of the chessboard.
-// Space Complexity: O(N^2), considering the space required for the chessboard and the recursive stack.
+// Explanation:
+// Use backtracking to count the number of valid solutions for the N-Queens problem.
+// Approach:
+// 1. Define a recursive function to explore all possible placements of queens row by row.
+// 2. In each row, iterate through each column to find a valid position for the queen.
+// 3. Check if placing a queen at position (row, col) is valid by ensuring it doesn't attack any other queen.
+// 4. If a valid position is found, place the queen and recursively try the next row.
+// 5. If all queens are placed successfully, increment the count of valid solutions.
+// 6. Backtrack by removing the last queen placed and try the next position in the same row.
+// 7. Return the count of valid solutions.
+// Time Complexity: O(N!) where N is the size of the chessboard (number of rows/columns). The time complexity arises from 
+//                  the exponential growth in the number of configurations to explore.
+// Space Complexity: O(N^2) where N is the size of the chessboard (number of rows/columns). The space complexity is 
+//                   dominated by the storage of the chessboard configurations.
 
 // Function to check if placing a queen at position (row, col) is valid
 bool isNotUnderAttack(vector<string> &board, int row, int col)

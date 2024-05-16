@@ -3,25 +3,31 @@
 using namespace std;
 
 // Problem Statement:
-// The N-Queens problem is to place N queens on an N×N chessboard such that no two queens attack each other.
+// The N-Queens problem is to place N chess queens on an N×N chessboard so that no two queens attack each other.
+// A queen can attack horizontally, vertically, or diagonally.
+// This code aims to find all distinct solutions to the N-Queens problem for a given N.
 
 // Intuition:
-// We can solve this problem using backtracking by trying all possible combinations of queen placements and checking for conflicts.
+// To solve the N-Queens problem, we can use backtracking. We'll try to place a queen in each row of the chessboard,
+// ensuring that no two queens attack each other. We'll recursively explore all possible placements.
 
-// DSA Strategy:
-// Recursion, Backtracking
+// DSA Strategy/Pattern: Backtracking
 
 // Approach:
-// 1. Implement a recursive function 'solve' to generate all valid placements of queens.
-//    a. Base case: If the current row 'row' reaches the size of the board 'n', add the current configuration 'board' to the result 'ans'.
-//    b. For each column 'c' in the current row, check if placing a queen at position (row, c) is valid:
-//       i. Check if there is no queen in the same column, left diagonal (\), and right diagonal (/).
-//       ii. If the position is valid, mark it as a queen ('Q') and recursively call 'solve' for the next row.
-//       iii. Backtrack: Remove the queen and try the next position in the same row.
-// 2. After generating all valid configurations, return the 'ans' vector containing all solutions.
-
-// Time Complexity: O(N!), where N is the size of the chessboard.
-// Space Complexity: O(N^2), considering the space required for the chessboard and the recursive stack.
+// Explanation:
+// Use backtracking to generate all valid placements of queens.
+// Approach:
+// 1. Define a recursive function that places queens on the chessboard row by row.
+// 2. In each row, iterate through each column to find a valid position for the queen.
+// 3. Check if placing a queen at position (row, col) is valid by verifying no other queens attack it.
+// 4. If a valid position is found, place the queen and recursively try the next row.
+// 5. If all queens are placed successfully, add the configuration to the result.
+// 6. Backtrack by removing the last queen placed and try the next column.
+// 7. Return all valid configurations.
+// Time Complexity: O(N!) where N is the size of the chessboard (number of rows/columns). The time complexity
+//                  arises from the exponential growth in the number of configurations to explore.
+// Space Complexity: O(N^2) where N is the size of the chessboard (number of rows/columns). The space complexity
+//                   is dominated by the storage of the chessboard configurations.
 
 // Function to check if placing a queen at position (row, col) is valid
 bool isNotUnderAttack(vector<string> &board, int row, int col)
@@ -72,9 +78,9 @@ void solve(vector<string> &board, int row, vector<vector<string>> &ans)
     {
         if (isNotUnderAttack(board, row, col)) // If placing a queen at position (row, col) is valid
         {
-            board[row][col] = 'Q'; // Place a queen at position (row, col)
+            board[row][col] = 'Q';      // Place a queen at position (row, col)
             solve(board, row + 1, ans); // Recursively try the next row
-            board[row][col] = '.'; // Backtrack: Remove the queen and try the next position in the same row
+            board[row][col] = '.';      // Backtrack: Remove the queen and try the next position in the same row
         }
     }
 }
@@ -83,8 +89,8 @@ void solve(vector<string> &board, int row, vector<vector<string>> &ans)
 vector<vector<string>> solveNQueens(int n)
 {
     vector<string> board(n, string(n, '.')); // Initialize the chessboard with empty cells
-    vector<vector<string>> ans; // Vector to store all valid configurations
-    solve(board, 0, ans); // Recursive queen placement
+    vector<vector<string>> ans;              // Vector to store all valid configurations
+    solve(board, 0, ans);                    // Recursive queen placement
     return ans;
 }
 

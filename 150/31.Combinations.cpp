@@ -2,16 +2,6 @@
 #include <vector>
 using namespace std;
 
-void print(vector<vector<int>> &board)
-{
-    for (auto row : board)
-    {
-        for (auto n : row)
-            cout << n << " ";
-        cout << endl;
-    }
-}
-
 void solve(int s, int n, int k, vector<int> &choose, vector<vector<int>> &ans)
 {
     if (k == choose.size())
@@ -35,6 +25,17 @@ vector<vector<int>> combine(int n, int k)
     solve(1, n, k, choose, ans);
     return ans;
 }
+
+void print(vector<vector<int>> &board)
+{
+    for (auto row : board)
+    {
+        for (auto n : row)
+            cout << n << " ";
+        cout << endl;
+    }
+}
+
 
 int main()
 {

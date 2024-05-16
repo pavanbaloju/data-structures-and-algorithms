@@ -3,29 +3,34 @@
 using namespace std;
 
 // Problem Statement:
-// Solve the Sudoku puzzle by filling the empty cells with digits from 1 to 9 such that each row, column, and 3x3 subgrid contains all the digits from 1 to 9 without any repetition.
+// Solve the Sudoku puzzle, where a 9x9 grid must be filled with digits from 1 to 9 such that each column, each row,
+// and each of the nine 3x3 subgrids that compose the grid contain all of the digits from 1 to 9 without repetition.
 
 // Intuition:
-// We can use backtracking to explore all possible configurations of filling digits in the Sudoku puzzle. At each empty cell, we try placing digits from '1' to '9' and recursively solve the remaining puzzle.
+// We can solve the Sudoku puzzle using backtracking. We'll recursively explore all possible placements of digits
+// from '1' to '9' in empty cells, ensuring that each placement is valid according to Sudoku rules.
 
-// DSA Strategy:
-// Backtracking
+// DSA Strategy/Pattern: Backtracking
 
 // Approach:
-// 1. Implement a function 'canPlace' to check if a digit can be placed at a given position (row, col) on the Sudoku board.
-//    a. Check for conflicts in the same row and same column.
-//    b. Check for conflicts in the same 3x3 subgrid.
-// 2. Implement a recursive function 'solve' to solve the Sudoku puzzle.
-//    a. Iterate through each cell of the board.
-//    b. If the cell is empty, try placing digits from '1' to '9' and check if the placement is valid using the 'canPlace' function.
-//    c. If a valid digit can be placed, recursively solve the remaining puzzle.
-//    d. If no valid digit can be placed, backtrack and try a different digit.
-//    e. If all cells are filled, the puzzle is solved.
-// 3. Implement a function 'solveSudoku' to invoke the solver function.
-// 4. In the main function, initialize the Sudoku board and call the 'solveSudoku' function to solve the puzzle.
+// Explanation:
+// 1. Define a function 'canPlace' to check if a digit can be placed at a given position (row, col) on the Sudoku board.
+//    - Check for conflicts in the same row and same column.
+//    - Check for conflicts in the same 3x3 subgrid.
+// 2. Define a recursive function 'solve' to solve the Sudoku puzzle.
+//    - Iterate through each cell in the board.
+//    - If the cell is empty ('.'), try placing digits from '1' to '9'.
+//    - Check if the digit can be placed at the current position using the 'canPlace' function.
+//    - If valid, place the digit and recursively solve the remaining puzzle.
+//    - If the puzzle is solved successfully, return true.
+//    - If no digit can be placed at the current position, backtrack by removing the digit and try a different one.
+// 3. Call the 'solve' function to solve the Sudoku puzzle.
+// 4. Print the solved Sudoku board.
 
-// Time Complexity: Exponential, but typically very fast for standard 9x9 Sudoku puzzles.
-// Space Complexity: O(1), constant extra space used apart from the input board.
+// Time Complexity: O(9^(N*N)) where N is the size of the Sudoku board (9 in this case). The time complexity arises from
+//                  the exponential growth in the number of configurations to explore.
+// Space Complexity: O(N*N) where N is the size of the Sudoku board (9 in this case). The space complexity is
+//                   dominated by the storage of the Sudoku board.
 
 // Function to check if a digit can be placed at a given position (row, col) on the Sudoku board.
 bool canPlace(vector<vector<char>> &board, int row, int col, char d)

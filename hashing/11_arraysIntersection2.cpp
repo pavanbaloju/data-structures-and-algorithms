@@ -21,6 +21,7 @@ vector<int> intersection(vector<int> &nums1, vector<int> &nums2)
     }
     return res;
 }
+
 vector<int> intersection2(vector<int> &nums1, vector<int> &nums2)
 {
     sort(nums1.begin(), nums1.end());

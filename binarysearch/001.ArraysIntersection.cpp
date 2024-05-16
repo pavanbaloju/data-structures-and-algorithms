@@ -29,13 +29,13 @@ vector<int> intersection(vector<int> &nums1, vector<int> &nums2)
 {
     vector<int> res;
     unordered_set<int> set;
-    
+
     // Insert all elements of nums1 into the set to remove duplicates
     for (int num : nums1)
     {
         set.insert(num);
     }
-    
+
     // Iterate through nums2 and add common elements to the result vector
     for (int num : nums2)
     {
@@ -45,7 +45,7 @@ vector<int> intersection(vector<int> &nums1, vector<int> &nums2)
             set.erase(num); // Remove the element from the set to avoid duplicates
         }
     }
-    
+
     return res;
 }
 
@@ -68,7 +68,7 @@ vector<int> intersection2(vector<int> &nums1, vector<int> &nums2)
 
     vector<int> res;
     unordered_set<int> set;
-    
+
     // Two pointers approach to find common elements
     for (int i = 0, j = 0; i < nums1.size() && j < nums2.size();)
     {
@@ -91,13 +91,13 @@ vector<int> intersection2(vector<int> &nums1, vector<int> &nums2)
             }
         }
     }
-    
+
     // Copy elements from set to result vector
     for (int num : set)
     {
         res.push_back(num);
     }
-    
+
     return res;
 }
 
@@ -107,7 +107,7 @@ int main()
     // Test cases
     vector<int> nums1 = {4, 9, 5};
     vector<int> nums2 = {9, 4, 9, 8, 4};
-    
+
     // Output the intersection using both approaches
     vector<int> v = intersection(nums1, nums2);
     for (int i = 0; i < v.size(); i++)

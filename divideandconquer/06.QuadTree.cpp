@@ -25,17 +25,19 @@ using namespace std;
 // Space Complexity: O(N^2) for the recursion stack and quad tree construction.
 
 // Definition of the Quad Tree Node
-class Node {
+class Node
+{
 public:
-    bool val; // Value of the node
-    bool isLeaf; // Indicates whether the node is a leaf
-    Node *topLeft; // Pointer to the top-left child node
-    Node *topRight; // Pointer to the top-right child node
-    Node *bottomLeft; // Pointer to the bottom-left child node
+    bool val;          // Value of the node
+    bool isLeaf;       // Indicates whether the node is a leaf
+    Node *topLeft;     // Pointer to the top-left child node
+    Node *topRight;    // Pointer to the top-right child node
+    Node *bottomLeft;  // Pointer to the bottom-left child node
     Node *bottomRight; // Pointer to the bottom-right child node
 
     // Constructors
-    Node() {
+    Node()
+    {
         val = false;
         isLeaf = false;
         topLeft = nullptr;
@@ -44,7 +46,8 @@ public:
         bottomRight = nullptr;
     }
 
-    Node(bool _val, bool _isLeaf) {
+    Node(bool _val, bool _isLeaf)
+    {
         val = _val;
         isLeaf = _isLeaf;
         topLeft = nullptr;
@@ -53,7 +56,8 @@ public:
         bottomRight = nullptr;
     }
 
-    Node(bool _val, bool _isLeaf, Node *_topLeft, Node *_topRight, Node *_bottomLeft, Node *_bottomRight) {
+    Node(bool _val, bool _isLeaf, Node *_topLeft, Node *_topRight, Node *_bottomLeft, Node *_bottomRight)
+    {
         val = _val;
         isLeaf = _isLeaf;
         topLeft = _topLeft;
@@ -64,7 +68,8 @@ public:
 };
 
 // Function to check if all elements in a subgrid are the same
-bool allSame(int r, int c, int n, vector<vector<int>> &grid) {
+bool allSame(int r, int c, int n, vector<vector<int>> &grid)
+{
     for (int i = 0; i < n; ++i)
         for (int j = 0; j < n; ++j)
             if (grid[r][c] != grid[r + i][c + j])
@@ -74,7 +79,8 @@ bool allSame(int r, int c, int n, vector<vector<int>> &grid) {
 }
 
 // Recursive function to construct the Quad Tree
-Node *solve(int r, int c, int n, vector<vector<int>> &grid) {
+Node *solve(int r, int c, int n, vector<vector<int>> &grid)
+{
     if (allSame(r, c, n, grid))
         return new Node(grid[r][c], true); // Create a leaf node if all elements are the same
 
@@ -91,11 +97,13 @@ Node *solve(int r, int c, int n, vector<vector<int>> &grid) {
 }
 
 // Function to construct the Quad Tree from the grid
-Node *construct(vector<vector<int>> &grid) {
+Node *construct(vector<vector<int>> &grid)
+{
     return solve(0, 0, grid.size(), grid); // Start the construction from the entire grid
 }
 
-int main() {
+int main()
+{
     // Example grid
     vector<vector<int>> grid = {
         {1, 1, 1, 1, 0, 0, 0, 0},
@@ -105,8 +113,7 @@ int main() {
         {1, 1, 1, 1, 0, 0, 0, 0},
         {1, 1, 1, 1, 0, 0, 0, 0},
         {1, 1, 1, 1, 0, 0, 0, 0},
-        {1, 1, 1, 1, 0, 0, 0, 0}
-    };
+        {1, 1, 1, 1, 0, 0, 0, 0}};
 
     // Construct the Quad Tree
     Node *root = construct(grid);

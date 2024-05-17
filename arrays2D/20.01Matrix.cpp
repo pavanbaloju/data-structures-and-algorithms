@@ -5,7 +5,7 @@ using namespace std;
 
 /*
 Problem Statement:
-Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell. 
+Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell.
 The distance between two adjacent cells is 1.
 
 Intuition:
@@ -84,9 +84,12 @@ vector<vector<int>> updateMatrix(vector<vector<int>> &mat)
 }
 
 // Function to print the result matrix
-void printMatrix(const vector<vector<int>>& matrix) {
-    for (const vector<int>& row : matrix) {
-        for (int cell : row) {
+void printMatrix(const vector<vector<int>> &matrix)
+{
+    for (const vector<int> &row : matrix)
+    {
+        for (int cell : row)
+        {
             cout << cell << " ";
         }
         cout << endl;

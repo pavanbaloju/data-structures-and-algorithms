@@ -5,8 +5,8 @@ using namespace std;
 
 /*
 Problem Statement:
-Given an m x n integer grid image representing a picture, where image[i][j] represents the pixel value of the image, 
-implement a function to perform a flood fill. Starting from the pixel (sr, sc), the function changes the color of the 
+Given an m x n integer grid image representing a picture, where image[i][j] represents the pixel value of the image,
+implement a function to perform a flood fill. Starting from the pixel (sr, sc), the function changes the color of the
 cell and all adjacent cells with the same starting color to the new color.
 
 Intuition:
@@ -35,7 +35,7 @@ void addAdjacent(vector<vector<int>> &image, int sr, int sc, int color, int star
     // Check if the cell is out of bounds
     if (sr < 0 || sr >= image.size() || sc < 0 || sc >= image[0].size())
         return;
-    
+
     // Add the cell to the queue if it has the start color
     if (image[sr][sc] == startColor)
         q.push({sr, sc});

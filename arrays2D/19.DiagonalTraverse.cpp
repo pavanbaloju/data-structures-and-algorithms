@@ -1,20 +1,31 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
-// Function to find the diagonal order traversal of a matrix.
-// Intuition:
-// The matrix can be traversed diagonally in two directions: upwards or downwards.
-// We maintain a flag 'up' to determine the direction of traversal.
-// For each diagonal traversal, we move either upwards or downwards, updating row and column indices accordingly.
-// Approach:
-// - Initialize variables for row (r), column (c), matrix dimensions (m and n), and result vector (res).
-// - Initialize an index variable (i) for the result vector and a flag variable (up) for the traversal direction.
-// - Iterate through the matrix diagonally until both row and column indices are within bounds.
-// - For each diagonal traversal, update row and column indices based on the traversal direction.
-// - Append matrix elements to the result vector as per the diagonal traversal.
-// - Toggle the 'up' flag to switch between upwards and downwards traversal.
-// - Return the result vector containing the diagonal order traversal.
+/*
+Problem Statement:
+Given an m x n matrix, return an array of all the elements of the matrix in diagonal order.
+
+Intuition:
+Diagonal traversal involves alternating between moving upwards and downwards across the matrix.
+
+DSA Strategy/Pattern:
+Matrix traversal
+
+Approach 1:
+1. Start from the top-left corner of the matrix.
+2. Use a flag `up` to determine the direction of traversal.
+3. Traverse the matrix diagonally upwards until reaching the top or right boundary.
+4. Then switch to traversing diagonally downwards until reaching the bottom or left boundary.
+5. Continue this process until all elements are visited.
+
+Time Complexity:
+O(m * n), where m is the number of rows and n is the number of columns.
+
+Space Complexity:
+O(m * n) for storing the result.
+*/
 vector<int> findDiagonalOrder(vector<vector<int>> &mat)
 {
     int r = 0, c = 0;
@@ -76,18 +87,19 @@ vector<int> findDiagonalOrder(vector<vector<int>> &mat)
     return res;
 }
 
-// Function to find the diagonal order traversal of a matrix using a different approach.
-// Intuition:
-// This approach traverses the matrix diagonally, moving either upwards or downwards.
-// It maintains a flag 'isup' to determine the direction of traversal.
-// The traversal continues until both row and column indices are within bounds.
-// Approach:
-// - Check for base cases: single row or single column matrix.
-// - Initialize variables for row (i), column (j), traversal direction (isup), and result vector (vc).
-// - Perform the diagonal traversal, updating row and column indices based on the traversal direction.
-// - Append matrix elements to the result vector as per the diagonal traversal.
-// - Toggle the 'isup' flag to switch between upwards and downwards traversal.
-// - Return the result vector containing the diagonal order traversal.
+/*
+Approach 2:
+1. Handle special cases for single row or single column matrices.
+2. Use two indices to track the current position in the matrix.
+3. Use a flag `isup` to alternate between moving upwards and downwards diagonally.
+4. Continue this process until all elements are visited.
+
+Time Complexity:
+O(m * n), where m is the number of rows and n is the number of columns.
+
+Space Complexity:
+O(m * n) for storing the result.
+*/
 vector<int> findDiagonalOrder2(vector<vector<int>> &mat)
 {
     // Base cases: Single row or single column matrix.
@@ -153,24 +165,27 @@ vector<int> findDiagonalOrder2(vector<vector<int>> &mat)
     return vc;
 }
 
+// Function to print the result vector
+void printResult(const vector<int> &res, const string &approach)
+{
+    cout << "Diagonal Order Traversal (" << approach << "): ";
+    for (int x : res)
+        cout << x << " ";
+    cout << endl;
+}
+
 int main()
 {
-    // Test the findDiagonalOrder function with an example matrix.
+    // Test the findDiagonalOrder functions with an example matrix.
     vector<vector<int>> matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 
     // Approach 1: Find diagonal order traversal using the first method.
     vector<int> res1 = findDiagonalOrder(matrix);
-    cout << "Diagonal Order Traversal (Approach 1): ";
-    for (int x : res1)
-        cout << x << " ";
-    cout << endl;
+    printResult(res1, "Approach 1");
 
     // Approach 2: Find diagonal order traversal using the second method.
     vector<int> res2 = findDiagonalOrder2(matrix);
-    cout << "Diagonal Order Traversal (Approach 2): ";
-    for (int x : res2)
-        cout << x << " ";
-    cout << endl;
+    printResult(res2, "Approach 2");
 
     return 0;
 }

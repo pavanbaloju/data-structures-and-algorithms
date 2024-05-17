@@ -15,6 +15,9 @@ using namespace std;
 // 1. Use a recursive function to explore all possible paths to the destination.
 // 2. Base cases: If we reach the top row or leftmost column, return 1.
 // 3. Recursive case: Sum the number of paths from the cell above and the cell to the left.
+
+// Time Complexity: O(2^(m+n)) - Exponential
+// Space Complexity: O(m+n) - Recursive stack space
 int uniquePaths(int m, int n)
 {
     // Base case: If we are at the top row or leftmost column, there is only 1 path
@@ -31,6 +34,9 @@ int uniquePaths(int m, int n)
 // 1. Use a DP table to store the results of subproblems and avoid recomputation.
 // 2. Initialize the DP table with -1 to indicate uncomputed cells.
 // 3. Use a helper function to implement the memoized recursion.
+
+// Time Complexity: O(m*n)
+// Space Complexity: O(m*n) - Memoization table
 int solveMemo(int m, int n, vector<vector<int>> &dp)
 {
     // Base case: If we are at the top row or leftmost column, there is only 1 path
@@ -58,6 +64,9 @@ int uniquePathsMemo(int m, int n)
 // 1. Use a DP table to store the number of paths to each cell.
 // 2. Initialize the first row and first column to 1 since there's only one way to get to those cells.
 // 3. Fill the DP table based on the number of paths from the cell above and the cell to the left.
+
+// Time Complexity: O(m*n)
+// Space Complexity: O(m*n) - DP table
 int solveTable(int m, int n, vector<vector<int>> &dp)
 {
     // Iterate over each cell in the DP table
@@ -92,6 +101,9 @@ int uniquePathsTable(int m, int n)
 // Approach 4: Optimized Dynamic Programming (Space Optimization)
 // 1. Use two 1D arrays to store the number of paths for the current and previous rows.
 // 2. Update the current row based on the previous row and the current row values.
+
+// Time Complexity: O(m*n)
+// Space Complexity: O(n) - Space optimized
 int uniquePathsOpt(int m, int n)
 {
     // Initialize the previous row
@@ -126,6 +138,9 @@ int uniquePathsOpt(int m, int n)
 // Approach 5: Combinatorial Solution
 // 1. Use the combinatorial formula to compute the number of unique paths.
 // 2. The number of unique paths from (0,0) to (m-1,n-1) is given by the binomial coefficient C(m+n-2, m-1) or C(m+n-2, n-1).
+
+// Time Complexity: O(1)
+// Space Complexity: O(1)
 int uniquePathsNCR(int m, int n)
 {
     int N = m + n - 2;         // Total steps to be taken

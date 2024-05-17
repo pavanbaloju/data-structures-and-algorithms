@@ -2,19 +2,6 @@
 #include <vector>
 using namespace std;
 
-void print(vector<vector<char>> &board)
-{
-    for (auto row : board)
-    {
-        for (auto cell : row)
-        {
-            cout << cell << " ";
-        }
-        cout << endl;
-        ;
-    }
-}
-
 void helper(vector<vector<char>> &board, vector<vector<bool>> &visited, int r, int c)
 {
     if (r < 0 || r >= board.size() || c < 0 || c >= board[0].size() || visited[r][c] || board[r][c] == 'X')
@@ -114,6 +101,20 @@ void solve2(vector<vector<char>> &board)
                 board[r][c] = 'O';
             }
         }
+    }
+}
+
+
+void print(vector<vector<char>> &board)
+{
+    for (auto row : board)
+    {
+        for (auto cell : row)
+        {
+            cout << cell << " ";
+        }
+        cout << endl;
+        ;
     }
 }
 
